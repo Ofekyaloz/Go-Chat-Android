@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Go-Chat-Android</string>
+    <string name="etUsername">Username</string>
+    <string name="etPassword">Password</string>
+    <string name="login_btnLogin">Login</string>
+    <string name="register_etAgain">Again</string>
+    <string name="etNickname">Nickname</string>
+    <string name="etEmail">Email</string>
+    <string name="btn_addimage">Add Image</string>
+    <string name="etSignup">Sign up</string>
+</resources>
