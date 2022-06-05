@@ -69,14 +69,14 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             String username = registerBinding.etRegisterUsername.getText().toString();
-            if (!Pattern.matches("[A-Za-z0-9_]{4,30}$", username)) {
+            if (!Pattern.matches("[A-Za-z0-9]{4,30}$", username)) {
                 tvError.append("Invalid username!");
                 tvError.setVisibility(View.VISIBLE);
                 return;
             }
 
             String nickname = registerBinding.etRegisterNickname.getText().toString();
-            if (!Pattern.matches("[A-Za-z0-9_]{4,30}$", nickname)) {
+            if (!Pattern.matches("[A-Za-z0-9]{4,30}$", nickname)) {
                 tvError.append("Invalid nickname!");
                 tvError.setVisibility(View.VISIBLE);
                 return;

@@ -30,6 +30,16 @@
             android:paddingBottom="15dp"
             />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_register"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:paddingBottom="10dp"/>
+
         <EditText
             android:id="@+id/et_registerUsername"
             android:layout_width="match_parent"
@@ -104,7 +114,7 @@
             android:background="@drawable/hollow_background"
             android:drawableEnd="@drawable/ic_image"
             android:fontFamily="sans-serif-black"
-            android:text="@string/btn_addimage"
+            android:text="@string/btn_Addimage"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -117,6 +127,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:background="@drawable/hollow_background"
+            android:drawableEnd="@drawable/ic_signup"
             android:fontFamily="sans-serif-black"
             android:textAllCaps="false"
             android:textColor="@color/white"
