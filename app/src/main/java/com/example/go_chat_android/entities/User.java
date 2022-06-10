@@ -1,3 +1,5 @@
+package com.example.go_chat_android.entities;
+
 public class User {
     private String userName;
     private int pictureId;
