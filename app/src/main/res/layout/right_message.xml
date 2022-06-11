@@ -17,7 +17,8 @@
             android:layout_marginVertical="20dp"
             android:layout_marginStart="8dp"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:layout_alignParentRight="true">
 
             <TextView
                 android:id="@+id/tvContent"
@@ -27,7 +28,8 @@
                 android:textSize="25sp"
                 android:textStyle="bold"
                 tools:text="Hey, how are you?"
-                android:paddingEnd="10dp"
+                android:paddingEnd="15dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
@@ -37,7 +39,9 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/gray"
                 android:textSize="20sp"
-                tools:text="10:10 1/1/2020" />
+                tools:text="10:10 1/1/2020"
+                android:paddingStart="15dp"
+                />
         </LinearLayout>
 
 
