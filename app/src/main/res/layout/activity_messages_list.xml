@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="970dp"
             android:layout_weight="6"
             android:orientation="horizontal">
 
@@ -24,21 +24,19 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/icon_user_default"
-                tools:ignore="NestedWeights"
-                />
+                tools:ignore="NestedWeights" />
 
             <TextView
                 android:id="@+id/tvFriendNickname"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:layout_weight="5"
+                android:text="Nickname"
                 android:textAlignment="center"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                tools:text="Nickname"
-                android:layout_margin="10dp"
-                android:text="Nickname"
-                />
+                tools:text="Nickname" />
         </LinearLayout>
 
         <ListView
