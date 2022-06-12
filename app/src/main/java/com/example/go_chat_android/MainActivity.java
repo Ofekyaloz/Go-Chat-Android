@@ -1,11 +1,15 @@
 package com.example.go_chat_android;
 
+
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.go_chat_android.api.ContactAPI;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
 
 import java.util.regex.Pattern;
@@ -13,6 +17,7 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mainBinding;
+    private SampleViewModel contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
 
+        contacts = new ViewModelProvider(this).get(SampleViewModel.class);
+
 
         mainBinding.btnGotoRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RegisterActivity.class);
+            Intent intent = new Intent(this, ContactList.class);
             startActivity(intent);
         });
 
@@ -35,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             mainBinding.loginTvError.setVisibility(View.INVISIBLE);
+
+            // contacts.getcontacts().setValue();
+            ContactAPI contactAPI = new ContactAPI();
+            contactAPI.get();
+            Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+            startActivity(intent);
+
         });
     }
 }
