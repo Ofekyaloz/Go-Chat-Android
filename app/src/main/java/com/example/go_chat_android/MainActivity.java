@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go_chat_android.api.ContactAPI;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
+import com.example.go_chat_android.viewmodels.SampleViewModel;
 
 import java.util.regex.Pattern;
 

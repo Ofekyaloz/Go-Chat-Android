@@ -15,4 +15,5 @@
     <string name="BaseUrl">http://10.0.2.2:7265/api</string>
     <string name="etTypeMessage">Type a message…</string>
     <string name="etSend">Send</string>
+    <string name="btnAdd">Add</string>
 </resources>

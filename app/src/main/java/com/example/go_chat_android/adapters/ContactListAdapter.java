@@ -1,4 +1,4 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,14 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.go_chat_android.R;
 import com.example.go_chat_android.entities.Contact;
 
 import java.util.ArrayList;
 
-public class CustomListAdapter extends ArrayAdapter<Contact> {
+public class ContactListAdapter extends ArrayAdapter<Contact> {
     LayoutInflater inflater;
 
-    public CustomListAdapter(Context ctx, ArrayList<Contact> userArrayList) {
+    public ContactListAdapter(Context ctx, ArrayList<Contact> userArrayList) {
         super(ctx, R.layout.custom_list_item, userArrayList);
 
         this.inflater = LayoutInflater.from(ctx);

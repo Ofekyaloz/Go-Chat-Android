@@ -7,8 +7,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
+import com.example.go_chat_android.adapters.ContactListAdapter;
+import com.example.go_chat_android.databinding.ActivityContactsBinding;
 import com.example.go_chat_android.entities.Contact;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -31,13 +35,28 @@ public class ContactList extends AppCompatActivity {
             "12:00", "00:30", "3:23", "8:59", "14:52", "12:23"
     };
 
+    private ActivityContactsBinding contactsBinding;
+    private AppDB db;
+    private ContactDao contactDao;
+
     ListView listView;
-    CustomListAdapter adapter;
+    ContactListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_list);
+        contactsBinding = ActivityContactsBinding.inflate(getLayoutInflater());
+        setContentView(contactsBinding.getRoot());
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
+
+        contactDao = db.contactDao();
+
+        FloatingActionButton btnAdd = findViewById(R.id.btnAddContact);
+        btnAdd.setOnClickListener(view -> {
+            Intent i = new Intent(this, AddContactActivity.class);
+            startActivity(i);
+        });
 
         ArrayList<Contact> contacts = new ArrayList<>();
 
@@ -47,7 +66,7 @@ public class ContactList extends AppCompatActivity {
         }
 
         listView = findViewById(R.id.list_view);
-        adapter = new CustomListAdapter(getApplicationContext(), contacts);
+        adapter = new ContactListAdapter(getApplicationContext(), contacts);
 
         listView.setAdapter(adapter);
         listView.setClickable(true);
@@ -65,5 +84,6 @@ public class ContactList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 }

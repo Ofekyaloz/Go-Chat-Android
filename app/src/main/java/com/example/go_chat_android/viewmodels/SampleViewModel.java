@@ -1,4 +1,4 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.viewmodels;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
