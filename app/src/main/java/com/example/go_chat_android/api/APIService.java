@@ -6,7 +6,7 @@ import com.example.go_chat_android.Contact;
 import com.example.go_chat_android.ContactDao;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
-import com.example.go_chat_android.entities.LoginInfo;
+import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.User;
 
 import java.util.List;
@@ -45,28 +45,26 @@ public class APIService {
         });
     }
 
-    public String login(LoginInfo loginInfo) {
-        Call<LoginInfo> call = webServiceApi.login(loginInfo);
-        String token = "";
-        call.enqueue(new Callback<LoginInfo>() {
+    public void login(LoginFields loginFields) {
+        Call<LoginFields> call = webServiceApi.login(loginFields);
+        call.enqueue(new Callback<LoginFields>() {
             @Override
-            public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
+            public void onResponse(Call<LoginFields> call, Response<LoginFields> response) {
                 if (response.isSuccessful()) {
-                    LoginInfo token = response.body();
+                    LoginFields token = response.body();
                 } else {
-//                    token = "";
+                    String token = "";
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginInfo> call, Throwable t) {
-
+            public void onFailure(Call<LoginFields> call, Throwable t) {
+                String tmp = "";
             }
         });
-        return token;
     }
 
-    public String register(User user) {
+    public void register(User user) {
         Call<User> call = webServiceApi.register(user);
         call.enqueue(new Callback<User>() {
             @Override
@@ -79,6 +77,5 @@ public class APIService {
 
             }
         });
-        return null;
     }
 }
