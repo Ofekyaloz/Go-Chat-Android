@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.go_chat_android.api.APIService;
 import com.example.go_chat_android.databinding.ActivityRegisterBinding;
+import com.example.go_chat_android.entities.User;
 
 import java.util.regex.Pattern;
 
@@ -83,6 +85,10 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             tvError.setVisibility(View.INVISIBLE);
+            APIService APIService = new APIService();
+            User user = new User(username,password, email, nickname, "", MyApplication.context.getString(R.string.BaseUrl));
+            APIService.register(user);
+
 
         });
 

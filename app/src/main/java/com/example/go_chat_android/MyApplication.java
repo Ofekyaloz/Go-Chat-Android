@@ -6,8 +6,8 @@ import android.content.Context;
 public class MyApplication extends Application {
     public static Context context;
 
-//    @Override
-    public void OnCreate() {
+    @Override
+    public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
     }

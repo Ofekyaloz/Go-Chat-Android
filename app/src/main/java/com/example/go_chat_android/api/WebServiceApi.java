@@ -1,6 +1,8 @@
 package com.example.go_chat_android.api;
 
 import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.entities.LoginInfo;
+import com.example.go_chat_android.entities.User;
 
 import java.util.List;
 
@@ -13,22 +15,26 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface WebServiceApi {
-    @GET("contacts")
+    @GET("Contacts")
     Call<List<Contact>> getContacts();
 
-    @POST("contacts")
+    @POST("Contacts")
     Call<Void> addContacts(@Body Contact contact);
 
-    @GET("contacts/{id}")
+    @GET("Contacts/{id}")
     Call<Contact> getContact(@Path("id") String id);
 
-    @PUT("contacts/{id}")
+    @PUT("Contacts/{id}")
     Call<Contact> editContact(@Path("id") String id);
 
-    @DELETE("contacts/{id}")
+    @DELETE("Contacts/{id}")
     Call<Contact> deleteContact(@Path("id") String id);
 
     @POST("Users/Login")
-    Call<String> login(@Body String userNamer, String password);
+    Call<LoginInfo> login(@Body LoginInfo loginInfo);
+
+    @POST("Users/Register")
+    Call<String>  register(@Body User user);
+
 
 }
