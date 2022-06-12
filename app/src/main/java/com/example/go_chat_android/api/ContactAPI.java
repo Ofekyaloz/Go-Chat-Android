@@ -1,5 +1,8 @@
 package com.example.go_chat_android.api;
 
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.go_chat_android.ContactDao;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.entities.Contact;
@@ -13,6 +16,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactAPI {
+    private MutableLiveData<List<Contact>> contactListData;
+    private ContactDao dao;
     Retrofit retrofit;
     WebServiceApi webServiceApi;
 
@@ -30,13 +35,10 @@ public class ContactAPI {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
                 List<Contact> contacts = response.body();
-
             }
 
             @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {
-
-            }
+            public void onFailure(Call<List<Contact>> call, Throwable t) {}
         });
     }
 
@@ -60,6 +62,4 @@ public class ContactAPI {
         });
         return token;
     }
-
-
 }

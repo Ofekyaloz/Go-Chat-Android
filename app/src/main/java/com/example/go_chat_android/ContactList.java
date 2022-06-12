@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.example.go_chat_android.adapters.ContactListAdapter;
-import com.example.go_chat_android.databinding.ActivityContactsBinding;
-import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactList extends AppCompatActivity {
 
@@ -27,17 +27,9 @@ public class ContactList extends AppCompatActivity {
             "Blue User", "Golden User", "Green User", "Red User", "Lightblue User", "Pink User"
     };
 
-    final private String[] lastMassages = {
-            "Hi, how are you?", "24K Magic", "I'm GREEN!", "Red is my name", "wasap :)", "Yo!"
-    };
-
-    final private String[] times = {
-            "12:00", "00:30", "3:23", "8:59", "14:52", "12:23"
-    };
-
-    private ActivityContactsBinding contactsBinding;
     private AppDB db;
     private ContactDao contactDao;
+    private List<Contact> contactList;
 
     ListView listView;
     ContactListAdapter adapter;
@@ -45,8 +37,7 @@ public class ContactList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        contactsBinding = ActivityContactsBinding.inflate(getLayoutInflater());
-        setContentView(contactsBinding.getRoot());
+        setContentView(R.layout.activity_contact_list);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
 
@@ -61,12 +52,14 @@ public class ContactList extends AppCompatActivity {
         ArrayList<Contact> contacts = new ArrayList<>();
 
         for (int i = 0; i < profilePictures.length; i++) {
-            Contact aContact = new Contact(userNames[i], "", lastMassages[i], times[i]);
+            Contact aContact = new Contact(userNames[i], "1.1.1.1");
             contacts.add(aContact);
         }
 
+        contactList = new ArrayList<>();
+
         listView = findViewById(R.id.list_view);
-        adapter = new ContactListAdapter(getApplicationContext(), contacts);
+        adapter = new ContactListAdapter(getApplicationContext(), contactList);
 
         listView.setAdapter(adapter);
         listView.setClickable(true);
@@ -78,12 +71,17 @@ public class ContactList extends AppCompatActivity {
 
                 intent.putExtra("userName", userNames[i]);
                 intent.putExtra("profilePicture", profilePictures[i]);
-                intent.putExtra("lastMassage", lastMassages[i]);
-                intent.putExtra("time", times[i]);
 
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        contactList.clear();
+        contactList.addAll(contactDao.index());
+        adapter.notifyDataSetChanged();
     }
 }

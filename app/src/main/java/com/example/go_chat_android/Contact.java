@@ -4,6 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 @Entity(tableName = "contactsTable")
 public class Contact {
     @NonNull
@@ -20,6 +25,16 @@ public class Contact {
 
     public void setName(@NonNull String name) {
         this.name = name;
+    }
+
+    public Contact(@NonNull String name, String server) {
+        this.name = name;
+        this.server = server;
+        this.last = null;
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strDate = dateFormat.format(date);
+        this.lastdate = strDate;
     }
 
     public String getServer() {

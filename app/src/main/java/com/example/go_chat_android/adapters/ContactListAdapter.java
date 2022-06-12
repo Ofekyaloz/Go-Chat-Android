@@ -12,16 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.go_chat_android.R;
-import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.Contact;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactListAdapter extends ArrayAdapter<Contact> {
     LayoutInflater inflater;
 
-    public ContactListAdapter(Context ctx, ArrayList<Contact> userArrayList) {
+    public ContactListAdapter(Context ctx, List<Contact> userArrayList) {
         super(ctx, R.layout.custom_list_item, userArrayList);
-
         this.inflater = LayoutInflater.from(ctx);
     }
 

@@ -24,11 +24,11 @@ public class ContactsViewModel extends ViewModel {
     }
 
     public void add(Contact contact) {
-        repository.add(contact);
+       // repository.add(contact);
     }
 
     public void delete(Contact contact) {
-        repository.delete(contact);
+       // repository.delete(contact);
     }
 
     public void reload() {

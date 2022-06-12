@@ -2,8 +2,12 @@ package com.example.go_chat_android;
 
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.DatabaseConfiguration;
+import androidx.room.InvalidationTracker;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.go_chat_android.api.ContactAPI;
 
@@ -12,18 +16,18 @@ import java.util.List;
 
 public class ContactsRepository {
     private ContactDao dao;
-    private PostListData postListData;
+    private ContactListData contactListData;
     private ContactAPI api;
 
     public ContactsRepository() {
-        LocalDatabase db = LocalDatabase.getInstance();
+        AppDB_Impl db = new AppDB_Impl();
         dao = db.contactDao();
-        postListData = new PostListData();
-        api = new ContactAPI(contactListData, dao);
+        contactListData = new ContactListData();
+        //api = new ContactAPI(contactListData, dao);
     }
 
-    class PostListData extends MutableLiveData<List<Contact>> {
-        public PostListData() {
+    class ContactListData extends MutableLiveData<List<Contact>> {
+        public ContactListData() {
             super();
             setValue(new LinkedList<Contact>());
         }
@@ -34,22 +38,22 @@ public class ContactsRepository {
 
             new Thread(() ->
             {
-                postListData.postValue(dao.get());
+                //contactListData.contactValue(dao.get());
             }).start();
 
         }
     }
 
     public LiveData<List<Contact>> getAll() {
-        return postListData;
+        return contactListData;
     }
 
-    public void add(final Contact post) {
-        api.add(post);
+    public void add(final Contact contact) {
+        //api.add(contact);
     }
 
-    public void delete(final Contact post) {
-        api.delete(post);
+    public void delete(final Contact contact) {
+        //api.delete(contact);
     }
 
     public void reload() {
@@ -57,12 +61,12 @@ public class ContactsRepository {
     }
 }
 
-public class GetContactsTask extends AsyncTask<Void, Void, Void> {
-    private MutableLiveData<List<Contact>> postListData;
+class GetContactsTask extends AsyncTask<Void, Void, Void> {
+    private MutableLiveData<List<Contact>> contactListData;
     private ContactDao dao;
 
-    public GetContactsTask(MutableLiveData<List<Contact>> postListData, ContactDao dao) {
-        this.postListData = postListData;
+    public GetContactsTask(MutableLiveData<List<Contact>> contactListData, ContactDao dao) {
+        this.contactListData = contactListData;
         this.dao = dao;
     }
 
@@ -70,7 +74,7 @@ public class GetContactsTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... x) {
 
         // connect to web-service
-        // retrieve posts
+        // retrieve contactListData
         // convert json response to objects
         // update objects in LiveData
 

@@ -16,14 +16,21 @@
         tools:layout_editor_absoluteX="10dp">
 
         <EditText
-            android:id="@+id/etItem"
+            android:id="@+id/usernameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/serverField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btnAdd"
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
