@@ -24,7 +24,6 @@ public class ContactAPI {
         webServiceApi = retrofit.create(WebServiceApi.class);
     }
 
-
     public void get() {
         Call<List<Contact>> call = webServiceApi.getContacts();
         call.enqueue(new Callback<List<Contact>>() {

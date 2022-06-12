@@ -11,7 +11,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface WebServiceApi {
-    @GET
+    @GET("contacts")
     Call<List<Contact>> getContacts();
 
     @POST("contacts")
@@ -25,8 +25,6 @@ public interface WebServiceApi {
 
     @DELETE("contacts/{id}")
     Call<Contact> deleteContact(@Path("id") String id);
-
-
 
 
 }
