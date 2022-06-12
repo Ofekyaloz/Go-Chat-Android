@@ -1,5 +1,6 @@
 package com.example.go_chat_android;
 
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mainBinding.btnGotoRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RegisterActivity.class);
+            Intent intent = new Intent(this, ContactList.class);
             startActivity(intent);
         });
 

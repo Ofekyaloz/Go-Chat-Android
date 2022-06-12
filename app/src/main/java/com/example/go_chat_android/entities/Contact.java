@@ -9,16 +9,16 @@ public class Contact {
     private String last;
     private String lastdate;
     private List<Message> Messages;
-    private User user;
-    private String userid;
+//    private User user;
+//    private String userid;
 
-    public Contact(String name, String server, String last, String lastdate, User user, String userid) {
+    public Contact(String name, String server, String last, String lastdate) {
         this.name = name;
         this.server = server;
         this.last = last;
         this.lastdate = lastdate;
-        this.user = user;
-        this.userid = userid;
+//        this.user = user;
+//        this.userid = userid;
     }
 
     public String getName() {

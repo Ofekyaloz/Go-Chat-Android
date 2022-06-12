@@ -8,11 +8,11 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.go_chat_android.entities.User;
+import com.example.go_chat_android.entities.Contact;
 
 import java.util.ArrayList;
 
-public class ListActivity extends AppCompatActivity {
+public class ContactList extends AppCompatActivity {
 
     final private int[] profilePictures = {
             R.drawable.blue, R.drawable.blue, R.drawable.blue,
@@ -37,21 +37,17 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_contact_list);
 
-        ArrayList<User> users = new ArrayList<>();
+        ArrayList<Contact> contacts = new ArrayList<>();
 
         for (int i = 0; i < profilePictures.length; i++) {
-            User aUser = new User(
-                    userNames[i], profilePictures[i],
-                    lastMassages[i], times[i]
-            );
-
-            users.add(aUser);
+            Contact aContact = new Contact(userNames[i], "", lastMassages[i], times[i]);
+            contacts.add(aContact);
         }
 
         listView = findViewById(R.id.list_view);
-        adapter = new CustomListAdapter(getApplicationContext(), users);
+        adapter = new CustomListAdapter(getApplicationContext(), contacts);
 
         listView.setAdapter(adapter);
         listView.setClickable(true);

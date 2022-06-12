@@ -11,14 +11,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.go_chat_android.entities.User;
+import com.example.go_chat_android.entities.Contact;
 
 import java.util.ArrayList;
 
-public class CustomListAdapter extends ArrayAdapter<User> {
+public class CustomListAdapter extends ArrayAdapter<Contact> {
     LayoutInflater inflater;
 
-    public CustomListAdapter(Context ctx, ArrayList<User> userArrayList) {
+    public CustomListAdapter(Context ctx, ArrayList<Contact> userArrayList) {
         super(ctx, R.layout.custom_list_item, userArrayList);
 
         this.inflater = LayoutInflater.from(ctx);
@@ -28,7 +28,7 @@ public class CustomListAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        User user = getItem(position);
+        Contact contact = getItem(position);
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.custom_list_item, parent, false);
@@ -39,10 +39,10 @@ public class CustomListAdapter extends ArrayAdapter<User> {
         TextView lastMsg = convertView.findViewById(R.id.last_massage);
         TextView time = convertView.findViewById(R.id.time);
 
-        imageView.setImageResource(user.getPictureId());
-        userName.setText(user.getUserName());
-        lastMsg.setText(user.getLastMassage());
-        time.setText(user.getLastMassageSendingTime());
+//        imageView.setImageResource(contact.getPictureId());
+        userName.setText(contact.getName());
+        lastMsg.setText(contact.getLast());
+        time.setText(contact.getLastdate());
 
         return convertView;
     }
