@@ -1,31 +1,44 @@
 package com.example.go_chat_android.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String userName;
-    private int pictureId;
-    private String lastMassage;
-    private String lastMassageSendingTime;
+    private String password;
+    private String email;
+    private String nickName;
+    private String photo;
+    private List<Contact> contacts;
+    private String connection;
 
-    public User(String userName, int pictureId, String lastMassage, String lastMassageSendingTime) {
+    public User(String userName, String password, String email, String nickName, String photo, String connection) {
         this.userName = userName;
-        this.pictureId = pictureId;
-        this.lastMassage = lastMassage;
-        this.lastMassageSendingTime = lastMassageSendingTime;
-    }
-
-    public int getPictureId() {
-        return pictureId;
-    }
-
-    public String getLastMassage() {
-        return lastMassage;
-    }
-
-    public String getLastMassageSendingTime() {
-        return lastMassageSendingTime;
+        this.password = password;
+        this.email = email;
+        this.nickName = nickName;
+        this.photo = photo;
+        this.connection = connection;
+        this.contacts = new ArrayList<>();
     }
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public String getConnection() {
+        return connection;
     }
 }

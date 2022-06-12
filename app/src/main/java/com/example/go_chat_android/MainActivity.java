@@ -43,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             mainBinding.loginTvError.setVisibility(View.INVISIBLE);
-
             // contacts.getcontacts().setValue();
             ContactAPI contactAPI = new ContactAPI();
-            contactAPI.get();
+            contactAPI.login(username, password);
             Intent intent = new Intent(getApplicationContext(), ListActivity.class);
             startActivity(intent);
 
