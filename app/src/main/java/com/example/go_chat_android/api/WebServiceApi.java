@@ -1,7 +1,9 @@
 package com.example.go_chat_android.api;
 
 import com.example.go_chat_android.entities.Contact;
+
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -26,5 +28,7 @@ public interface WebServiceApi {
     @DELETE("contacts/{id}")
     Call<Contact> deleteContact(@Path("id") String id);
 
+    @POST("Users/Login")
+    Call<String> login(@Body String userNamer, String password);
 
 }

@@ -40,4 +40,26 @@ public class ContactAPI {
         });
     }
 
+    public String login(String username, String password) {
+        Call<String> call = webServiceApi.login(username, password);
+        String token = "";
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    String token = response.body();
+                } else {
+//                    token = "";
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+        return token;
+    }
+
+
 }
