@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class ContactList extends AppCompatActivity {
 
     final private int[] profilePictures = {
-            R.drawable.blue, R.drawable.blue, R.drawable.blue,
-            R.drawable.blue, R.drawable.blue, R.drawable.blue
+            R.drawable.icon_user_default, R.drawable.icon_user_default, R.drawable.icon_user_default,
+            R.drawable.icon_user_default, R.drawable.icon_user_default, R.drawable.icon_user_default
     };
 
     final private String[] userNames = {
