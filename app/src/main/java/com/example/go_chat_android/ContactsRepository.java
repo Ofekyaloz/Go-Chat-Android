@@ -9,7 +9,8 @@ import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
-import com.example.go_chat_android.api.ContactAPI;
+import com.example.go_chat_android.api.APIService;
+import com.example.go_chat_android.api.APIService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.List;
 public class ContactsRepository {
     private ContactDao dao;
     private ContactListData contactListData;
-    private ContactAPI api;
+    private APIService api;
 
     public ContactsRepository() {
-        AppDB_Impl db = new AppDB_Impl();
-        dao = db.contactDao();
+        //AppDB_Impl db = new AppDB_Impl();
+        //dao = db.contactDao();
         contactListData = new ContactListData();
         //api = new ContactAPI(contactListData, dao);
     }

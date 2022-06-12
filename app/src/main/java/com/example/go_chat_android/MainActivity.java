@@ -9,8 +9,10 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.go_chat_android.api.ContactAPI;
+import com.example.go_chat_android.api.APIService;
+import com.example.go_chat_android.api.APIService;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
+import com.example.go_chat_android.entities.LoginInfo;
 import com.example.go_chat_android.viewmodels.SampleViewModel;
 
 import java.util.regex.Pattern;
@@ -44,8 +46,9 @@ public class MainActivity extends AppCompatActivity {
             }
             mainBinding.loginTvError.setVisibility(View.INVISIBLE);
             // contacts.getcontacts().setValue();
-            ContactAPI contactAPI = new ContactAPI();
-            contactAPI.login(username, password);
+            APIService contactAPI = new APIService();
+            LoginInfo loginInfo = new LoginInfo(username, password);
+            contactAPI.login(loginInfo);
             Intent intent = new Intent(getApplicationContext(), ListActivity.class);
             startActivity(intent);
 

@@ -1,5 +1,7 @@
 package com.example.go_chat_android.entities;
 
+import com.example.go_chat_android.Contact;
+
 import java.util.ArrayList;
 import java.util.List;
 
