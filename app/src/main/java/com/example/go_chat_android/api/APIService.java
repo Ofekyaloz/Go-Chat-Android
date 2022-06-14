@@ -3,10 +3,10 @@ package com.example.go_chat_android.api;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.go_chat_android.Common;
-import com.example.go_chat_android.Contact;
-import com.example.go_chat_android.ContactDao;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
+import com.example.go_chat_android.daos.ContactDao;
+import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

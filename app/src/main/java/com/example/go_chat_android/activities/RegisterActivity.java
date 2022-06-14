@@ -1,4 +1,4 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,9 +10,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.go_chat_android.Common;
+import com.example.go_chat_android.MyApplication;
+import com.example.go_chat_android.R;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.databinding.ActivityRegisterBinding;
 import com.example.go_chat_android.entities.User;
+import com.example.go_chat_android.lists.ContactList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -98,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             tvError.setVisibility(View.INVISIBLE);
 //            APIService APIService = new APIService();
-            User user = new User(username,password, nickname, email , "", null,MyApplication.context.getString(R.string.BaseUrl));
+            User user = new User(username,password, nickname, email , "", null, MyApplication.context.getString(R.string.BaseUrl));
 //            APIService.register(user);
             gson = new GsonBuilder()
                     .setLenient()

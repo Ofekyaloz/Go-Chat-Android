@@ -8,6 +8,10 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.go_chat_android.Common;
+import com.example.go_chat_android.MyApplication;
+import com.example.go_chat_android.R;
+import com.example.go_chat_android.RegisterActivity;
 import com.example.go_chat_android.api.APIService;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
