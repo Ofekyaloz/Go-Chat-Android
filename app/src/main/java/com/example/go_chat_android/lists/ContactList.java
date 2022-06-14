@@ -9,34 +9,37 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import com.example.go_chat_android.activities.AddContactActivity;
 import com.example.go_chat_android.AppDB;
+import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
+import com.example.go_chat_android.activities.AddContactActivity;
 import com.example.go_chat_android.adapters.ContactAdapter;
+import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class ContactList extends AppCompatActivity {
-
-    final private int[] profilePictures = {
-            R.drawable.icon_user_default, R.drawable.icon_user_default, R.drawable.icon_user_default,
-            R.drawable.icon_user_default, R.drawable.icon_user_default, R.drawable.icon_user_default
-    };
-
-    final private String[] userNames = {
-            "Blue User", "Golden User", "Green User", "Red User", "Lightblue User", "Pink User"
-    };
 
     private AppDB db;
     private ContactDao contactDao;
     private List<Contact> contactList;
-
-    ListView listView;
-    ContactAdapter adapter;
+    private Retrofit retrofit;
+    private WebServiceApi webServiceApi;
+    private Gson gson;
+    private ListView listView;
+    private ContactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +56,35 @@ public class ContactList extends AppCompatActivity {
             startActivity(i);
         });
 
-        ArrayList<Contact> contacts = new ArrayList<>();
-
-        for (int i = 0; i < profilePictures.length; i++) {
-            Contact aContact = new Contact(userNames[i], "1.1.1.1");
-            contacts.add(aContact);
-        }
-
         contactList = new ArrayList<>();
 
         listView = findViewById(R.id.list_view);
         adapter = new ContactAdapter(getApplicationContext(), contactList);
         listView.setAdapter(adapter);
         listView.setClickable(true);
+
+        gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        retrofit = new Retrofit.Builder()
+                .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        webServiceApi = retrofit.create(WebServiceApi.class);
+        Call<List<Contact>> call = webServiceApi.getContacts();
+        call.enqueue(new Callback<List<Contact>>() {
+            @Override
+            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                if (response.isSuccessful()) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Contact>> call, Throwable t) {
+
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

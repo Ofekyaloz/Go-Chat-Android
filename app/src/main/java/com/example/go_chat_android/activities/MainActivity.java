@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.go_chat_android.Common;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
-import com.example.go_chat_android.RegisterActivity;
 import com.example.go_chat_android.api.APIService;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
@@ -34,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mainBinding;
     private SampleViewModel contacts;
     private APIService contactAPI;
-    Retrofit retrofit;
-    WebServiceApi webServiceApi;
-    Gson gson;
+    private Retrofit retrofit;
+    private WebServiceApi webServiceApi;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
