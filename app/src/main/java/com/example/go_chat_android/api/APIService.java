@@ -40,7 +40,7 @@ public class APIService {
     }
 
     public void get(String token) {
-        Call<List<Contact>> call = webServiceApi.getContacts(token);
+        Call<List<Contact>> call = webServiceApi.getContacts("Bearer " + token);
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {

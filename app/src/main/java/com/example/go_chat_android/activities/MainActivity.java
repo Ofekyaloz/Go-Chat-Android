@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             mainBinding.loginTvError.setVisibility(View.INVISIBLE);
                             Common.token = response.body();
-//                        apiService = new APIService();
-//                        apiService.get(Common.token);
+                        apiService = new APIService();
+                        apiService.get(Common.token);
                         Intent intent = new Intent(getApplicationContext(), ContactList.class);
                         startActivity(intent);
                         } else {
