@@ -16,11 +16,11 @@ import com.example.go_chat_android.entities.Contact;
 
 import java.util.List;
 
-public class ContactListAdapter extends ArrayAdapter<Contact> {
+public class ContactAdapter extends ArrayAdapter<Contact> {
     LayoutInflater inflater;
 
-    public ContactListAdapter(Context ctx, List<Contact> userArrayList) {
-        super(ctx, R.layout.custom_list_item, userArrayList);
+    public ContactAdapter(Context ctx, List<Contact> userArrayList) {
+        super(ctx, R.layout.contact_list_item, userArrayList);
         this.inflater = LayoutInflater.from(ctx);
     }
 
@@ -31,7 +31,7 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
         Contact contact = getItem(position);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.custom_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.contact_list_item, parent, false);
         }
 
         ImageView imageView = convertView.findViewById(R.id.profile_image);

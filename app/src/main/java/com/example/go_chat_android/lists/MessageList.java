@@ -1,9 +1,8 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.lists;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -13,11 +12,13 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import com.example.go_chat_android.adapters.ContactListAdapter;
+import com.example.go_chat_android.AppDB;
+import com.example.go_chat_android.R;
+import com.example.go_chat_android.adapters.MessageAdapter;
+import com.example.go_chat_android.daos.MessageDao;
 import com.example.go_chat_android.entities.Message;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MessageList extends AppCompatActivity {
 
@@ -58,10 +59,12 @@ public class MessageList extends AppCompatActivity {
         send = findViewById(R.id.btnSend);
         send.setOnClickListener(v -> {
             input = findViewById(R.id.etTextInput);
-            Message message = new Message(input.getText().toString(), java.time.LocalDateTime.now().toString(), true, contactName);
-            messageDao.insert(message);
-            onResume();
-            input.setText("");
+            if (input.length() != 0) {
+                Message message = new Message(input.getText().toString(), java.time.LocalDateTime.now().toString(), true, contactName);
+                messageDao.insert(message);
+                onResume();
+                input.setText("");
+            }
         });
     }
 

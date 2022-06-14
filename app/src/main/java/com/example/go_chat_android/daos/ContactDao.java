@@ -1,4 +1,4 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

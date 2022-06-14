@@ -1,4 +1,4 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.lists;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,11 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import com.example.go_chat_android.adapters.ContactListAdapter;
+import com.example.go_chat_android.activities.AddContactActivity;
+import com.example.go_chat_android.AppDB;
+import com.example.go_chat_android.R;
+import com.example.go_chat_android.adapters.ContactAdapter;
+import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,7 +36,7 @@ public class ContactList extends AppCompatActivity {
     private List<Contact> contactList;
 
     ListView listView;
-    ContactListAdapter adapter;
+    ContactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,7 @@ public class ContactList extends AppCompatActivity {
         contactList = new ArrayList<>();
 
         listView = findViewById(R.id.list_view);
-        adapter = new ContactListAdapter(getApplicationContext(), contactList);
+        adapter = new ContactAdapter(getApplicationContext(), contactList);
         listView.setAdapter(adapter);
         listView.setClickable(true);
 

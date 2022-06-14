@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.go_chat_android.api.APIService;
+import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
 
 import java.util.LinkedList;

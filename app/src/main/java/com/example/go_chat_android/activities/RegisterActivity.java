@@ -1,4 +1,4 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.go_chat_android.MyApplication;
+import com.example.go_chat_android.R;
 import com.example.go_chat_android.api.APIService;
 import com.example.go_chat_android.databinding.ActivityRegisterBinding;
 import com.example.go_chat_android.entities.User;

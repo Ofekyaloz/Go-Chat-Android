@@ -18,22 +18,19 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".AddContactActivity"
+            android:name=".activities.AddContactActivity"
             android:exported="false" />
         <activity
-            android:name=".UserActivity"
+            android:name=".lists.ContactList"
             android:exported="false" />
         <activity
-            android:name=".ContactList"
+            android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".lists.MessageList"
             android:exported="false" />
         <activity
-            android:name=".MessageList"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

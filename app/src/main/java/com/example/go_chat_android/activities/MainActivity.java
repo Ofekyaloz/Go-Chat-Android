@@ -1,4 +1,4 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.activities;
 
 
 import android.content.Intent;
@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.go_chat_android.api.APIService;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
 import com.example.go_chat_android.entities.LoginFields;
+import com.example.go_chat_android.lists.ContactList;
 import com.example.go_chat_android.viewmodels.SampleViewModel;
 
 import java.util.regex.Pattern;
