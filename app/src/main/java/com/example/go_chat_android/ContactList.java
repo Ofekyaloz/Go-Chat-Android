@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.example.go_chat_android.adapters.ContactListAdapter;
-import com.example.go_chat_android.Contact;
+import com.example.go_chat_android.entities.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -67,11 +67,8 @@ public class ContactList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), UserActivity.class);
-
-                intent.putExtra("userName", userNames[i]);
-                intent.putExtra("profilePicture", profilePictures[i]);
-
+                Intent intent = new Intent(getApplicationContext(), MessageList.class);
+                intent.putExtra("contactName", contactList.get(i).getName());
                 startActivity(intent);
             }
         });

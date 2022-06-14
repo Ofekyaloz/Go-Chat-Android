@@ -3,7 +3,7 @@ package com.example.go_chat_android.viewmodels;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.go_chat_android.Contact;
+import com.example.go_chat_android.entities.Contact;
 
 import java.util.List;
 

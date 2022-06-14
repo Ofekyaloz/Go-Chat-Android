@@ -12,9 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.go_chat_android.R;
-import com.example.go_chat_android.Contact;
+import com.example.go_chat_android.entities.Contact;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListAdapter extends ArrayAdapter<Contact> {
