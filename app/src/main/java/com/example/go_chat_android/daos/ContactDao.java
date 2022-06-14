@@ -1,10 +1,12 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.go_chat_android.entities.Contact;
 
 import java.util.List;
 

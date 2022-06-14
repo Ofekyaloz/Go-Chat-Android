@@ -2,15 +2,12 @@ package com.example.go_chat_android;
 
 import android.os.AsyncTask;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.go_chat_android.api.APIService;
-import com.example.go_chat_android.api.APIService;
+import com.example.go_chat_android.daos.ContactDao;
+import com.example.go_chat_android.entities.Contact;
 
 import java.util.LinkedList;
 import java.util.List;

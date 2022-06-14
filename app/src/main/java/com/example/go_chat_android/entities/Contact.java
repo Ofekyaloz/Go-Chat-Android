@@ -1,4 +1,4 @@
-package com.example.go_chat_android;
+package com.example.go_chat_android.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
