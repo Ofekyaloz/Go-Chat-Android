@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mainBinding;
     private SampleViewModel contacts;
-    private APIService contactAPI;
+    private APIService apiService;
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
     private Gson gson;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
-        contactAPI = new APIService();
+        apiService = new APIService();
 
         contacts = new ViewModelProvider(this).get(SampleViewModel.class);
 
@@ -60,36 +60,42 @@ public class MainActivity extends AppCompatActivity {
                 mainBinding.loginTvError.setVisibility(View.VISIBLE);
                 return;
             }
-            gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            webServiceApi = retrofit.create(WebServiceApi.class);
-            LoginFields loginFields = new LoginFields(username, password);
-            Call<String> call = webServiceApi.login(loginFields);
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if (response.isSuccessful()) {
-                        mainBinding.loginTvError.setVisibility(View.INVISIBLE);
-                        Common.token = response.body();
+            new Thread(() -> {
+                gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+                webServiceApi = retrofit.create(WebServiceApi.class);
+                LoginFields loginFields = new LoginFields(username, password);
+                Call<String> call = webServiceApi.login(loginFields);
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.isSuccessful()) {
+                            mainBinding.loginTvError.setVisibility(View.INVISIBLE);
+                            Common.token = response.body();
+//                        apiService = new APIService();
+//                        apiService.get(Common.token);
                         Intent intent = new Intent(getApplicationContext(), ContactList.class);
                         startActivity(intent);
-                    } else {
+                        } else {
+                            mainBinding.loginTvError.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
                         mainBinding.loginTvError.setVisibility(View.VISIBLE);
                     }
-                }
 
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    mainBinding.loginTvError.setVisibility(View.VISIBLE);
-                }
+                });
 
-            });
+            }).start();
 
         });
+
     }
 }

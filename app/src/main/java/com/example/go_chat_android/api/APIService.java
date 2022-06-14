@@ -7,6 +7,7 @@ import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,8 +39,8 @@ public class APIService {
 
     }
 
-    public void get() {
-        Call<List<Contact>> call = webServiceApi.getContacts();
+    public void get(String token) {
+        Call<List<Contact>> call = webServiceApi.getContacts(token);
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
@@ -52,24 +53,24 @@ public class APIService {
         });
     }
 
-//    public void login(LoginFields loginFields) {
-//        Call<LoginFields> call = webServiceApi.login(loginFields);
-//        call.enqueue(new Callback<LoginFields>() {
-//            @Override
-//            public void onResponse(Call<LoginFields> call, Response<LoginFields> response) {
-//                if (response.isSuccessful()) {
-//                    LoginFields token = response.body();
-//                } else {
-//                    String token = "";
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<LoginFields> call, Throwable t) {
-//                String tmp = "";
-//            }
-//        });
-//    }
+    public void login(LoginFields loginFields) {
+        Call<String> call = webServiceApi.login(loginFields);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    String token = response.body();
+                } else {
+                    String token = "";
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                String tmp = "";
+            }
+        });
+    }
 
     public void register(User user) {
         Call<String> call = webServiceApi.register(user);

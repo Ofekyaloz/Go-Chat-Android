@@ -24,9 +24,6 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -71,20 +68,20 @@ public class ContactList extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
-        Call<List<Contact>> call = webServiceApi.getContacts();
-        call.enqueue(new Callback<List<Contact>>() {
-            @Override
-            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                if (response.isSuccessful()) {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {
-
-            }
-        });
+//        Call<List<Contact>> call = webServiceApi.getContacts();
+//        call.enqueue(new Callback<List<Contact>>() {
+//            @Override
+//            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+//                if (response.isSuccessful()) {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Contact>> call, Throwable t) {
+//
+//            }
+//        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

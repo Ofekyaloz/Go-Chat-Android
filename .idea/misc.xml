@@ -11,7 +11,7 @@
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable/left_message.xml" value="0.1795" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable/right_message.xml" value="0.1795" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_add_contact.xml" value="0.2" />
-        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_contact_list.xml" value="0.2" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_contact_list.xml" value="0.1" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_list.xml" value="0.264" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_message_list.xml" value="0.2" />
@@ -19,6 +19,7 @@
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_rightmessage.xml" value="0.20436083796494228" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_user.xml" value="0.1" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/contact_list_item.xml" value="0.4" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/custom_list_item.xml" value="0.2" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/right_message.xml" value="0.264" />
       </map>
