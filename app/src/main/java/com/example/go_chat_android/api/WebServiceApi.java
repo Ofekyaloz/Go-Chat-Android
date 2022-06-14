@@ -1,6 +1,6 @@
 package com.example.go_chat_android.api;
 
-import com.example.go_chat_android.Contact;
+import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.User;
 

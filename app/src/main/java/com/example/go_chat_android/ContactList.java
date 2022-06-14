@@ -60,7 +60,6 @@ public class ContactList extends AppCompatActivity {
 
         listView = findViewById(R.id.list_view);
         adapter = new ContactListAdapter(getApplicationContext(), contactList);
-
         listView.setAdapter(adapter);
         listView.setClickable(true);
 

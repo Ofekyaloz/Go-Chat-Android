@@ -52,8 +52,8 @@ public class MessageList extends AppCompatActivity {
 
         listView = findViewById(R.id.lvMessageList);
         adapter = new MessageAdapter(getApplicationContext(), messageList);
-
         listView.setAdapter(adapter);
+        listView.setClickable(true);
 
         send = findViewById(R.id.btnSend);
         send.setOnClickListener(v -> {

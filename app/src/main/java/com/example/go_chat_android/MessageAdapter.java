@@ -29,7 +29,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         Message message = getItem(position);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.custom_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.right_message, parent, false);
         }
 
         TextView tvContent = convertView.findViewById(R.id.tvContent);
