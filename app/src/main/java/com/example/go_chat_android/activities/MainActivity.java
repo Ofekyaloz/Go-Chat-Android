@@ -17,6 +17,10 @@ import com.example.go_chat_android.databinding.ActivityMainBinding;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.lists.ContactList;
 import com.example.go_chat_android.viewmodels.SampleViewModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -42,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, instanceIdResult -> {
+            String newToken = instanceIdResult.getToken();
+        });
+
+
         contactAPI = new APIService();
 
         contacts = new ViewModelProvider(this).get(SampleViewModel.class);
