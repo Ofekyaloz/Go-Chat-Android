@@ -1,7 +1,7 @@
 package com.example.go_chat_android.api;
 
-import com.example.go_chat_android.entities.Contact;
-import com.example.go_chat_android.entities.LoginInfo;
+import com.example.go_chat_android.Contact;
+import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.User;
 
 import java.util.List;
@@ -31,10 +31,11 @@ public interface WebServiceApi {
     Call<Contact> deleteContact(@Path("id") String id);
 
     @POST("Users/Login")
-    Call<LoginInfo> login(@Body LoginInfo loginInfo);
+    Call<LoginFields> login(@Body LoginFields loginFields);
 
     @POST("Users/Register")
-    Call<User>  register(@Body User user);
+    Call<User> register(@Body User user);
 
+//    @POST("Contacts/{id}/Messages/")
 
 }
