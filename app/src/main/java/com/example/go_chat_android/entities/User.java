@@ -6,41 +6,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private String userName;
-    private String password;
-    private String email;
-    private String nickName;
-    private String photo;
-    private List<Contact> contacts;
-    private String connection;
+    private String Username;
+    private String Password;
+    private String Email;
+    private String NickName;
+    private String Photo;
+    private List<Contact> Contacts;
+    private String Connection;
 
-    public User(String userName, String password, String email, String nickName, String photo, String connection) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.nickName = nickName;
-        this.photo = photo;
-        this.connection = connection;
-        this.contacts = new ArrayList<>();
+    public User(String Username, String Password, String NickName, String Email, String Photo,Contact Contacts, String Connection) {
+        this.Username = Username;
+        this.Password = Password;
+        this.Email = Email;
+        this.NickName = NickName;
+        this.Photo = Photo;
+        this.Connection = Connection;
+        this.Contacts = new ArrayList<>();
     }
 
     public String getUserName() {
-        return userName;
+        return Username;
     }
 
     public String getNickName() {
-        return nickName;
+        return NickName;
     }
 
     public String getPhoto() {
-        return photo;
+        return Photo;
     }
 
     public List<Contact> getContacts() {
-        return contacts;
+        return Contacts;
     }
 
     public String getConnection() {
-        return connection;
+        return Connection;
     }
 }

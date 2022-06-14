@@ -5,7 +5,7 @@ public class LoginFields {
     private String password;
 
     public LoginFields(String username, String password) {
-        this.password = password;
         this.username = username;
+        this.password = password;
     }
 }

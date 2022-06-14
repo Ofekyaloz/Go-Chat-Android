@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -22,7 +23,7 @@ public interface WebServiceApi {
     Call<Void> addContacts(@Body Contact contact);
 
     @GET("Contacts/{id}")
-    Call<Contact> getContact(@Path("id") String id);
+    Call<Contact> getContact(@Path("id") String id, @Header("Authorization") String str);
 
     @PUT("Contacts/{id}")
     Call<Contact> editContact(@Path("id") String id);
@@ -31,10 +32,10 @@ public interface WebServiceApi {
     Call<Contact> deleteContact(@Path("id") String id);
 
     @POST("Users/Login")
-    Call<LoginFields> login(@Body LoginFields loginFields);
+    Call<String> login(@Body LoginFields loginFields);
 
     @POST("Users/Register")
-    Call<User> register(@Body User user);
+    Call<String> register(@Body User user);
 
 //    @POST("Contacts/{id}/Messages/")
 

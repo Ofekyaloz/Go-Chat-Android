@@ -9,17 +9,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go_chat_android.api.APIService;
+import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.viewmodels.SampleViewModel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mainBinding;
     private SampleViewModel contacts;
     private APIService contactAPI;
+    Retrofit retrofit;
+    WebServiceApi webServiceApi;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +56,35 @@ public class MainActivity extends AppCompatActivity {
                 mainBinding.loginTvError.setVisibility(View.VISIBLE);
                 return;
             }
-            mainBinding.loginTvError.setVisibility(View.INVISIBLE);
+            gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            webServiceApi = retrofit.create(WebServiceApi.class);
             LoginFields loginFields = new LoginFields(username, password);
-            contactAPI.login(loginFields);
-            Intent intent = new Intent(getApplicationContext(), ContactList.class);
-            startActivity(intent);
+            Call<String> call = webServiceApi.login(loginFields);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        mainBinding.loginTvError.setVisibility(View.INVISIBLE);
+                        Common.token = response.body();
+                        Intent intent = new Intent(getApplicationContext(), ContactList.class);
+                        startActivity(intent);
+                    } else {
+                        mainBinding.loginTvError.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    mainBinding.loginTvError.setVisibility(View.VISIBLE);
+                }
+
+            });
 
         });
     }

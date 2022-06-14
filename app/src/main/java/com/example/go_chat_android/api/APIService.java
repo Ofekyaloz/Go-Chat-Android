@@ -2,12 +2,14 @@ package com.example.go_chat_android.api;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.go_chat_android.Common;
 import com.example.go_chat_android.Contact;
 import com.example.go_chat_android.ContactDao;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
-import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -22,13 +24,18 @@ public class APIService {
     private ContactDao dao;
     Retrofit retrofit;
     WebServiceApi webServiceApi;
+    Gson gson;
 
     public APIService() {
+        gson = new GsonBuilder()
+                .setLenient()
+                .create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
+
     }
 
     public void get() {
@@ -45,36 +52,35 @@ public class APIService {
         });
     }
 
-    public void login(LoginFields loginFields) {
-        Call<LoginFields> call = webServiceApi.login(loginFields);
-        call.enqueue(new Callback<LoginFields>() {
-            @Override
-            public void onResponse(Call<LoginFields> call, Response<LoginFields> response) {
-                if (response.isSuccessful()) {
-                    LoginFields token = response.body();
-                } else {
-                    String token = "";
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginFields> call, Throwable t) {
-                String tmp = "";
-            }
-        });
-    }
+//    public void login(LoginFields loginFields) {
+//        Call<LoginFields> call = webServiceApi.login(loginFields);
+//        call.enqueue(new Callback<LoginFields>() {
+//            @Override
+//            public void onResponse(Call<LoginFields> call, Response<LoginFields> response) {
+//                if (response.isSuccessful()) {
+//                    LoginFields token = response.body();
+//                } else {
+//                    String token = "";
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<LoginFields> call, Throwable t) {
+//                String tmp = "";
+//            }
+//        });
+//    }
 
     public void register(User user) {
-        Call<User> call = webServiceApi.register(user);
-        call.enqueue(new Callback<User>() {
+        Call<String> call = webServiceApi.register(user);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-
+            public void onResponse(Call<String> call, Response<String> response) {
+                Common.token = response.body();
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
+            public void onFailure(Call<String> call, Throwable t) {
             }
         });
     }
