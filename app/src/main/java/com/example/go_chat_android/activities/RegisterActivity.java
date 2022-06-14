@@ -7,20 +7,34 @@ import android.provider.MediaStore;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.go_chat_android.Common;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
-import com.example.go_chat_android.api.APIService;
+import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.databinding.ActivityRegisterBinding;
 import com.example.go_chat_android.entities.User;
+import com.example.go_chat_android.lists.ContactList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private ActivityRegisterBinding registerBinding;
     private final int GALLERY_REQ_CODE = 1000;
-
+    private Retrofit retrofit;
+    private WebServiceApi webServiceApi;
+    private Gson gson;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +101,37 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             tvError.setVisibility(View.INVISIBLE);
-            APIService APIService = new APIService();
-            User user = new User(username,password, email, nickname, "", MyApplication.context.getString(R.string.BaseUrl));
-            APIService.register(user);
+//            APIService APIService = new APIService();
+            User user = new User(username,password, nickname, email , "", null, MyApplication.context.getString(R.string.BaseUrl));
+//            APIService.register(user);
+            gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            webServiceApi = retrofit.create(WebServiceApi.class);
+            Call<String> call = webServiceApi.register(user);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        Common.token = response.body();
+                        Intent intent = new Intent(getApplicationContext(), ContactList.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
 
 
         });
+
 
         registerBinding.btnAddImage.setOnClickListener(v -> {
             Intent iGallery = new Intent(Intent.ACTION_PICK);
