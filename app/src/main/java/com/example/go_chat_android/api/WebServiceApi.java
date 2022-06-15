@@ -1,5 +1,6 @@
 package com.example.go_chat_android.api;
 
+import com.example.go_chat_android.entities.contactFields;
 import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.Message;
@@ -16,13 +17,13 @@ import retrofit2.http.Path;
 
 public interface WebServiceApi {
     @GET("Contacts")
-    Call<List<Contact>> getContacts(@Header("Authorization") String str);
+    Call<List<Contact>> getContacts(@Header("Authorization") String token);
 
     @POST("Contacts")
-    Call<Void> addContacts(@Body Contact contact, @Header("Authorization") String str);
+    Call<Void> addContact(@Body contactFields contact, @Header("Authorization") String token);
 
     @GET("Contacts/{id}")
-    Call<Contact> getContact(@Path("id") String id, @Header("Authorization") String str);
+    Call<Contact> getContact(@Path("id") String id, @Header("Authorization") String token);
 
     @POST("Users/Login")
     Call<String> login(@Body LoginFields loginFields);
@@ -31,8 +32,8 @@ public interface WebServiceApi {
     Call<String> register(@Body User user);
 
     @GET("Contacts/{id}/Messages/")
-    Call<List<Message>> getMessages(@Header("Authorization") String str);
+    Call<List<Message>> getMessages(@Path("id") String id,@Header("Authorization") String token);
 
     @POST("Contacts/{id}/Messages/")
-    Call<List<Message>> addMessage(String id, @Body String content,@Header("Authorization") String str);
+    Call<Void> addMessage(@Path("id") String id, @Body String content,@Header("Authorization") String token);
 }

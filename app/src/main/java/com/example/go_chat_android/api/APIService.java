@@ -8,7 +8,9 @@ import com.example.go_chat_android.R;
 import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.LoginFields;
+import com.example.go_chat_android.entities.Message;
 import com.example.go_chat_android.entities.User;
+import com.example.go_chat_android.entities.contactFields;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -86,6 +88,53 @@ public class APIService {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+            }
+        });
+    }
+
+    public void getMessages(String contact, String token) {
+        Call<List<Message>> call = webServiceApi.getMessages(contact,"Bearer " + token);
+        call.enqueue(new Callback<List<Message>>() {
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                if (response.isSuccessful()) {
+                    List<Message> messages = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void addMessage(String contact, String token, String content) {
+        Call<Void> call = webServiceApi.addMessage(contact, content,token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void addContact(contactFields contactFields, String token) {
+        Call<Void> call = webServiceApi.addContact(contactFields, token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
             }
         });
     }
