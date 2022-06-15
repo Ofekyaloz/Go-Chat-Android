@@ -8,7 +8,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.go_chat_android.Common;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.api.APIService;
@@ -76,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
                             mainBinding.loginTvError.setVisibility(View.INVISIBLE);
-                            Common.token = response.body();
+                            MyApplication.token = response.body();
                         apiService = new APIService();
-                        apiService.get(Common.token);
+                        apiService.get(MyApplication.token);
                         Intent intent = new Intent(getApplicationContext(), ContactList.class);
                         startActivity(intent);
                         } else {

@@ -59,9 +59,9 @@ public class APIService {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    String token = response.body();
+                    Common.token = response.body();
                 } else {
-                    String token = "";
+
                 }
             }
 
@@ -77,7 +77,11 @@ public class APIService {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Common.token = response.body();
+                if (response.isSuccessful()) {
+                    Common.token = response.body();
+                } else {
+
+                }
             }
 
             @Override
