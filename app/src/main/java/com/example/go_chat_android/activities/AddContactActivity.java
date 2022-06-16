@@ -11,6 +11,7 @@ import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.databinding.ActivityAddContactBinding;
 import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.entities.Invitation;
 import com.example.go_chat_android.entities.contactFields;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,19 +44,17 @@ public class AddContactActivity extends AppCompatActivity {
             String contactName = addContactBinding.contactNameField.getText().toString();
             String server = addContactBinding.serverField.getText().toString();
             String contactNickname = addContactBinding.contactNicknameField.getText().toString();
-
+            String token = MyApplication.token;
+            gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            webServiceApi = retrofit.create(WebServiceApi.class);
             new Thread(() -> {
-                String token = MyApplication.token;
-                gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-                retrofit = new Retrofit.Builder()
-                        .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build();
-                webServiceApi = retrofit.create(WebServiceApi.class);
                 contactFields contactFields = new contactFields(contactName, contactNickname, server);
-
                 Call<Void> call = webServiceApi.addContact(contactFields, "Bearer " + token);
                 call.enqueue(new Callback<Void>() {
                     @Override
@@ -76,6 +75,21 @@ public class AddContactActivity extends AppCompatActivity {
                 });
             }).start();
 
+            new Thread(() -> {
+                Invitation invitation = new Invitation(MyApplication.username, contactName, "");
+                Call<Void> call = webServiceApi.invitations(invitation);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+            }).start();
         });
     }
 }

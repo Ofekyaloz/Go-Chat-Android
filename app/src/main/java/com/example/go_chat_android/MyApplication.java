@@ -11,6 +11,7 @@ public class MyApplication extends Application {
     public static Context context;
     public static String token;
     public static List<Contact> contactList;
+    public static String username;
 
     @Override
     public void onCreate() {

@@ -112,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
                             MyApplication.token = response.body();
+                            MyApplication.username = username;
                             Intent intent = new Intent(getApplicationContext(), ContactList.class);
                             startActivity(intent);
                         }

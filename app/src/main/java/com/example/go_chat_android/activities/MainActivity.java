@@ -3,10 +3,8 @@ package com.example.go_chat_android.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.api.APIService;
@@ -18,9 +16,7 @@ import com.example.go_chat_android.viewmodels.SampleViewModel;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.regex.Pattern;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             mainBinding.loginTvError.setVisibility(View.INVISIBLE);
                             MyApplication.token = response.body();
-                            apiService = new APIService();
-                            apiService.get(MyApplication.token);
+                            MyApplication.username = username;
+//                            apiService = new APIService();
+//                            apiService.get(MyApplication.token);
                             Intent intent = new Intent(getApplicationContext(), ContactList.class);
                             startActivity(intent);
                         } else {

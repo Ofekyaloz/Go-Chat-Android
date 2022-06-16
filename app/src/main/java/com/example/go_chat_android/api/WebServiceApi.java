@@ -1,13 +1,13 @@
 package com.example.go_chat_android.api;
 
 import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.entities.Invitation;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.Message;
+import com.example.go_chat_android.entities.Transfer;
 import com.example.go_chat_android.entities.User;
 import com.example.go_chat_android.entities.contactFields;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -33,4 +33,10 @@ public interface WebServiceApi {
 
     @POST("Contacts/{id}/Messages/")
     Call<Void> addMessage(@Path("id") String id, @Body String content,@Header("Authorization") String token);
+
+    @POST("transfer")
+    Call<Void> transfer(@Body Transfer transfer);
+
+    @POST("invitations")
+    Call<Void> invitations(@Body Invitation invitation);
 }
