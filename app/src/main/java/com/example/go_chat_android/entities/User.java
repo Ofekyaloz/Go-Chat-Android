@@ -26,6 +26,18 @@ public class User {
         return Username;
     }
 
+    public String getUsername() {
+        return Username;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
     public String getNickName() {
         return NickName;
     }

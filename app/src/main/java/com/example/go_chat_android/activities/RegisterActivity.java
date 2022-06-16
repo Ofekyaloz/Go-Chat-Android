@@ -8,7 +8,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.go_chat_android.Common;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.api.WebServiceApi;
@@ -112,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
-                            Common.token = response.body();
+                            MyApplication.token = response.body();
                             Intent intent = new Intent(getApplicationContext(), ContactList.class);
                             startActivity(intent);
                         }

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2265" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable-v24/left_message.xml" value="0.1915" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable/background.xml" value="0.2265" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable/button_background_color.xml" value="0.169" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable/hollow_background.xml" value="0.2265" />
@@ -14,14 +15,15 @@
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_contact_list.xml" value="0.1" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_list.xml" value="0.264" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_message_list.xml" value="0.2" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_message_list.xml" value="0.176" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_messages_list.xml" value="0.1" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_rightmessage.xml" value="0.20436083796494228" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/activity_user.xml" value="0.1" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/contact_list_item.xml" value="0.4" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/custom_list_item.xml" value="0.2" />
-        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/right_message.xml" value="0.264" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/left_message.xml" value="0.2" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/layout/right_message.xml" value="0.2" />
       </map>
     </option>
   </component>

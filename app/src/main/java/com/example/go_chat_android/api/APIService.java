@@ -2,7 +2,6 @@ package com.example.go_chat_android.api;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.go_chat_android.Common;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.daos.ContactDao;
@@ -46,7 +45,7 @@ public class APIService {
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                List<Contact> contacts = response.body();
+                MyApplication.contactList = response.body();
             }
 
             @Override
@@ -61,7 +60,7 @@ public class APIService {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    Common.token = response.body();
+                    MyApplication.token = response.body();
                 } else {
 
                 }
@@ -80,7 +79,7 @@ public class APIService {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    Common.token = response.body();
+                    MyApplication.token = response.body();
                 } else {
 
                 }
@@ -125,7 +124,7 @@ public class APIService {
     }
 
     public void addContact(contactFields contactFields, String token) {
-        Call<Void> call = webServiceApi.addContact(contactFields, token);
+        Call<Void> call = webServiceApi.addContact(contactFields, "Bearer " + token);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

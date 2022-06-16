@@ -1,6 +1,5 @@
 package com.example.go_chat_android.activities;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +15,7 @@ import com.example.go_chat_android.databinding.ActivityMainBinding;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.lists.ContactList;
 import com.example.go_chat_android.viewmodels.SampleViewModel;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -41,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
-        apiService = new APIService();
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, instanceIdResult -> {
+            String newToken = instanceIdResult.getToken();
+        });
 
         contacts = new ViewModelProvider(this).get(SampleViewModel.class);
-
 
         mainBinding.btnGotoRegister.setOnClickListener(v -> {
             Intent intent = new Intent(this, RegisterActivity.class);
@@ -76,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             mainBinding.loginTvError.setVisibility(View.INVISIBLE);
                             MyApplication.token = response.body();
-                        apiService = new APIService();
-                        apiService.get(MyApplication.token);
-                        Intent intent = new Intent(getApplicationContext(), ContactList.class);
-                        startActivity(intent);
+                            apiService = new APIService();
+                            apiService.get(MyApplication.token);
+                            Intent intent = new Intent(getApplicationContext(), ContactList.class);
+                            startActivity(intent);
                         } else {
                             mainBinding.loginTvError.setVisibility(View.VISIBLE);
                         }
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
-
             }).start();
 
         });

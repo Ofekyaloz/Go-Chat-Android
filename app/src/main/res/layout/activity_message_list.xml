@@ -1,92 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
     android:background="@color/light_green">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/refreshLayout">
+        android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lstContacts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-28dp">
 
         <LinearLayout
+            android:id="@+id/llContactBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/ivFriendPic"
                 android:layout_width="160dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 app:srcCompat="@drawable/icon_user_default"
-                tools:ignore="NestedWeights"
-                />
+                tools:ignore="NestedWeights" />
 
             <TextView
                 android:id="@+id/tvFriendNickname"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="@string/etNickname"
                 android:textAlignment="center"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                tools:text="Nickname"
-                android:layout_margin="10dp"
-                android:text="Nickname"
-                />
+                tools:text="Nickname" />
         </LinearLayout>
 
         <ListView
             android:id="@+id/lvMessageList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:listitem="@layout/right_message">
-        </ListView>
-
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/llInput"
+            app:layout_constraintTop_toBottomOf="@+id/llContactBar"
+            tools:listitem="@layout/right_message" />
 
         <LinearLayout
+            android:id="@+id/llInput"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
                 android:id="@+id/etTextInput"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="13"
                 android:ems="10"
                 android:hint="@string/etTypeMessage"
                 android:inputType="textPersonName"
+                android:minHeight="48dp"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnSend"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
                 android:background="@drawable/hollow_background"
                 android:drawableEnd="@drawable/ic_send"
                 android:fontFamily="sans-serif-black"
@@ -97,6 +96,5 @@
 
         </LinearLayout>
 
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
