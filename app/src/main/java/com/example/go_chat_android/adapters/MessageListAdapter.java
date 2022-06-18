@@ -37,12 +37,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.left_message, parent, false);
-//        if (messageList.get(viewType).getSent()) {
-//            itemView = mInflater.inflate(R.layout.left_message, parent, false);
-//        } else {
-//            itemView = mInflater.inflate(R.layout.right_message, parent, false);
-//        }
+        View itemView;
+        if (messageList.get(viewType).getSent()) {
+            itemView = mInflater.inflate(R.layout.right_message, parent, false);
+        } else {
+            itemView = mInflater.inflate(R.layout.left_message, parent, false);
+        }
         return new MessageViewHolder(itemView);
     }
 

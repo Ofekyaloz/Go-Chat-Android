@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
+import com.example.go_chat_android.SettingsActivity;
 import com.example.go_chat_android.api.APIService;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
@@ -91,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 });
             }).start();
 
+        });
+
+        mainBinding.btnSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
         });
 
     }
