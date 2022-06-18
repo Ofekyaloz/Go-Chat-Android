@@ -3,11 +3,11 @@ package com.example.go_chat_android.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.go_chat_android.MyApplication;
-import com.example.go_chat_android.R;
-import com.example.go_chat_android.SettingsActivity;
 import com.example.go_chat_android.api.APIService;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.databinding.ActivityMainBinding;
@@ -17,7 +17,9 @@ import com.example.go_chat_android.viewmodels.SampleViewModel;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mainBinding.getRoot());
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, instanceIdResult -> {
             String newToken = instanceIdResult.getToken();
+            newToken.length();
         });
 
         contacts = new ViewModelProvider(this).get(SampleViewModel.class);
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         .setLenient()
                         .create();
                 retrofit = new Retrofit.Builder()
-                        .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                        .baseUrl(MyApplication.BaseUrl)
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 webServiceApi = retrofit.create(WebServiceApi.class);

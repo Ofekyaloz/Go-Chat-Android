@@ -33,7 +33,7 @@ public class APIService {
                 .setLenient()
                 .create();
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.BaseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
