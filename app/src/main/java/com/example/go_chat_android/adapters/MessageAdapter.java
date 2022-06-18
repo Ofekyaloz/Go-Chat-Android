@@ -19,7 +19,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
     LayoutInflater inflater;
 
     public MessageAdapter(Context ctx, ArrayList<Message> userArrayList) {
-        super(ctx, R.layout.right_message, userArrayList);
+        super(ctx, R.layout.left_message, userArrayList);
         this.inflater = LayoutInflater.from(ctx);
     }
 
@@ -29,7 +29,10 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
         Message message = getItem(position);
 
-        if (convertView == null) {
+        if (convertView == null || message.getSent()) {
+            convertView = inflater.inflate(R.layout.left_message, parent, false);
+        }
+        if (!message.getSent()) {
             convertView = inflater.inflate(R.layout.right_message, parent, false);
         }
 

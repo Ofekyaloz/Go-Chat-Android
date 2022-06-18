@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,8 +16,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/left_message"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/right_message"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -33,7 +33,6 @@
                     android:id="@+id/tvContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
                     android:paddingStart="5dp"
                     android:paddingEnd="15dp"
                     android:textColor="@color/black"
@@ -44,10 +43,9 @@
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="end"
-                    android:paddingEnd="20dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:paddingStart="15dp"
                     android:textColor="#546E7A"
                     android:textSize="20sp"
                     tools:text="10:10 1/1/2020" />

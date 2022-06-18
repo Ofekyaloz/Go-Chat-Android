@@ -21,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,7 +55,7 @@ public class ContactList extends AppCompatActivity {
             startActivity(i);
         });
 
-        contactList = new ArrayList<>();
+        contactList = contactDao.index();
 
         listView = findViewById(R.id.list_view);
         adapter = new ContactAdapter(getApplicationContext(), contactList);
@@ -78,7 +77,7 @@ public class ContactList extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
                     if (response.isSuccessful()) {
-                        contactList = response.body();
+//                        contactList = response.body();
                     }
                 }
 
