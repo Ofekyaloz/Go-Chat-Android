@@ -19,6 +19,7 @@ import com.example.go_chat_android.R;
 import com.example.go_chat_android.adapters.MessageListAdapter;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.daos.MessageDao;
+import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.Message;
 import com.example.go_chat_android.entities.Transfer;
 import com.google.gson.Gson;
@@ -107,12 +108,35 @@ public class MessageList extends AppCompatActivity {
                 RVMessageList.scrollToPosition(messageList.size() - 1);
                 etInput.setText("");
                 new Thread(() -> {
-                    Call<Void> call = webServiceApi.addMessage(contactName, content, "Bearer " + token);
+                    Content content1 = new Content(content);
+                    Call<Void> call = webServiceApi.addMessage(contactName, content1, "Bearer " + token);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+
+                        }
+                    });
                 }).start();
 
                 new Thread(() -> {
                     Transfer transfer = new Transfer(MyApplication.username, contactName, content);
                     Call<Void> call = webServiceApi.transfer(transfer);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+
+                        }
+                    });
                 }).start();
             }
         });

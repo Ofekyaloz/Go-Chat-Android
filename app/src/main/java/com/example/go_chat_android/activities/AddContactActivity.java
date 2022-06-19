@@ -2,8 +2,10 @@ package com.example.go_chat_android.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
+
 import com.example.go_chat_android.AppDB;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
@@ -15,6 +17,7 @@ import com.example.go_chat_android.entities.Invitation;
 import com.example.go_chat_android.entities.contactFields;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,6 +84,9 @@ public class AddContactActivity extends AppCompatActivity {
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+
+                        }
 
                     }
 

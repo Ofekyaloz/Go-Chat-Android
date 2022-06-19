@@ -3,9 +3,9 @@ package com.example.go_chat_android.api;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.go_chat_android.MyApplication;
-import com.example.go_chat_android.R;
 import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.Message;
 import com.example.go_chat_android.entities.User;
@@ -109,7 +109,8 @@ public class APIService {
     }
 
     public void addMessage(String contact, String token, String content) {
-        Call<Void> call = webServiceApi.addMessage(contact, content,token);
+        Content content1 = new Content(content);
+        Call<Void> call = webServiceApi.addMessage(contact, content1,token);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
