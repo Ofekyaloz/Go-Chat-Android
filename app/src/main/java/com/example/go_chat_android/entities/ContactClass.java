@@ -1,57 +1,25 @@
 package com.example.go_chat_android.entities;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-@Entity(tableName = "contactsTable")
-public class Contact {
-    @NonNull
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-    private String userId;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
+public class ContactClass {
+    private String id;
     private String name;
     private String server;
     private String last;
     private String lastdate;
+    private List<Message> messages;
 
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    public void setName(@NonNull String name) {
-        this.name = name;
-    }
-
-    public Contact(@NonNull String name, String server) {
+    public ContactClass(String name, String server) {
         this.name = name;
         this.server = server;
         this.last = null;
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd-mm-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String strDate = dateFormat.format(date);
         this.lastdate = strDate;
     }
@@ -79,4 +47,5 @@ public class Contact {
     public void setLastdate(String lastdate) {
         this.lastdate = lastdate;
     }
+
 }

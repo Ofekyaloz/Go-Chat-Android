@@ -40,19 +40,19 @@ public class APIService {
 
     }
 
-    public void get(String token) {
-        Call<List<Contact>> call = webServiceApi.getContacts("Bearer " + token);
-        call.enqueue(new Callback<List<Contact>>() {
-            @Override
-            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                MyApplication.contactList = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {
-            }
-        });
-    }
+//    public void get(String token) {
+//        Call<List<Contact>> call = webServiceApi.getContacts("Bearer " + token);
+//        call.enqueue(new Callback<List<Contact>>() {
+//            @Override
+//            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+//                MyApplication.contactList = response.body();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Contact>> call, Throwable t) {
+//            }
+//        });
+//    }
 
     public void login(LoginFields loginFields) {
         Call<String> call = webServiceApi.login(loginFields);

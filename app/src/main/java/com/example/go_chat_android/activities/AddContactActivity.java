@@ -48,15 +48,15 @@ public class AddContactActivity extends AppCompatActivity {
             String server = addContactBinding.serverField.getText().toString();
             String contactNickname = addContactBinding.contactNicknameField.getText().toString();
             String token = MyApplication.token;
-            gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(MyApplication.BaseUrl)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            webServiceApi = retrofit.create(WebServiceApi.class);
             new Thread(() -> {
+                gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(MyApplication.BaseUrl)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+                webServiceApi = retrofit.create(WebServiceApi.class);
                 contactFields contactFields = new contactFields(contactName, contactNickname, server);
                 Call<Void> call = webServiceApi.addContact(contactFields, "Bearer " + token);
                 call.enqueue(new Callback<Void>() {
@@ -80,7 +80,16 @@ public class AddContactActivity extends AppCompatActivity {
             }).start();
 
             new Thread(() -> {
-                Invitation invitation = new Invitation(MyApplication.username, contactName, "");
+                MyApplication.friendBaseurl = server;
+                Gson gson2 = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit2 = new Retrofit.Builder()
+                        .baseUrl(server)
+                        .addConverterFactory(GsonConverterFactory.create(gson2))
+                        .build();
+                webServiceApi = retrofit2.create(WebServiceApi.class);
+                Invitation invitation = new Invitation(MyApplication.username, contactName, server);
                 Call<Void> call = webServiceApi.invitations(invitation);
                 call.enqueue(new Callback<Void>() {
                     @Override

@@ -17,6 +17,7 @@ import com.example.go_chat_android.adapters.ContactAdapter;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.entities.ContactClass;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -72,18 +73,22 @@ public class ContactList extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
             webServiceApi = retrofit.create(WebServiceApi.class);
-            Call<List<Contact>> call = webServiceApi.getContacts("Bearer " + token);
-            call.enqueue(new Callback<List<Contact>>() {
+
+            Call<List<ContactClass>> call = webServiceApi.getContacts("Bearer " + token);
+            call.enqueue(new Callback<List<ContactClass>>() {
                 @Override
-                public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                public void onResponse(Call<List<ContactClass>> call, Response<List<ContactClass>> response) {
                     if (response.isSuccessful()) {
-//                        contactList = response.body();
+                        List<ContactClass> List = response.body();
+                        // gili - add new contacts to dao (messages is an option)
+                        for (ContactClass c: List) {
+
+                        }
                     }
                 }
 
                 @Override
-                public void onFailure(Call<List<Contact>> call, Throwable t) {
-
+                public void onFailure(Call<List<ContactClass>> call, Throwable t) {
                 }
             });
 
@@ -95,6 +100,7 @@ public class ContactList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), MessageList.class);
                 intent.putExtra("contactName", contactList.get(i).getName());
+                intent.putExtra("url", contactList.get(i).getServer());
                 startActivity(intent);
             }
         });
