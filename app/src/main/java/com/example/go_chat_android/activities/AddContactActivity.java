@@ -61,6 +61,7 @@ public class AddContactActivity extends AppCompatActivity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             Contact contact = new Contact(contactName, server);
+                            contact.setUserId(MyApplication.username);
                             contactDao.insert(contact);
                             finish();
                         } else {

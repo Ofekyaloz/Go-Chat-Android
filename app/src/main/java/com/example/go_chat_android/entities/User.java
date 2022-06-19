@@ -16,17 +16,15 @@ public class User {
     private String Email;
     private String NickName;
     private String Photo;
-    private List<Contact> Contacts;
     private String Connection;
 
-    public User(String Username, String Password, String NickName, String Email, String Photo, List<Contact> Contacts, String Connection) {
+    public User(String Username, String Password, String NickName, String Email, String Photo, String Connection) {
         this.Username = Username;
         this.Password = Password;
         this.Email = Email;
         this.NickName = NickName;
         this.Photo = Photo;
         this.Connection = Connection;
-        this.Contacts = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -53,9 +51,6 @@ public class User {
         return Photo;
     }
 
-    public List<Contact> getContacts() {
-        return Contacts;
-    }
 
     public String getConnection() {
         return Connection;

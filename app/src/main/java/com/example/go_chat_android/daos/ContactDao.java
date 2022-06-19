@@ -14,8 +14,8 @@ import java.util.List;
 public interface ContactDao {
     @Query("SELECT * FROM contactsTable")
     List<Contact> index();
-    @Query("SELECT * FROM contactsTable WHERE name = :name")
-    Contact get(String name);
+    @Query("SELECT * FROM contactsTable WHERE userId = :userId")
+    List<Contact> getContacts(String userId);
     @Insert
     void insert(Contact... contacts);
     @Update

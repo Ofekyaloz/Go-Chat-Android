@@ -55,7 +55,7 @@ public class ContactList extends AppCompatActivity {
             startActivity(i);
         });
 
-        contactList = contactDao.index();
+        contactList = contactDao.getContacts(MyApplication.username);
 
         listView = findViewById(R.id.list_view);
         adapter = new ContactAdapter(getApplicationContext(), contactList);
@@ -104,7 +104,7 @@ public class ContactList extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         contactList.clear();
-        contactList.addAll(contactDao.index());
+        contactList.addAll(contactDao.getContacts(MyApplication.username));
         adapter.notifyDataSetChanged();
     }
 }
