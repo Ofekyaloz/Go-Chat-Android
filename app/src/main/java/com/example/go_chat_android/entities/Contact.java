@@ -12,7 +12,26 @@ import java.util.Date;
 @Entity(tableName = "contactsTable")
 public class Contact {
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String userId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     private String name;
     private String server;
     private String last;

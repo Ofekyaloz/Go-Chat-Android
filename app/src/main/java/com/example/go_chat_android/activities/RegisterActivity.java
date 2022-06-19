@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             tvError.setVisibility(View.INVISIBLE);
             new Thread(() -> {
-                User user = new User(username,password, nickname, email , "", null, "http:localhost:7265");
+                User user = new User(username,password, nickname, email , "", "http:localhost:7265");
                 gson = new GsonBuilder()
                         .setLenient()
                         .create();
