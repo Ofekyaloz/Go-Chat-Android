@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -113,7 +112,7 @@ public class MessageList extends AppCompatActivity {
             String content = etInput.getText().toString();
             if (etInput.length() != 0) {
                 Date date = Calendar.getInstance().getTime();
-                DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd-mm-yyyy");
+                DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
                 String strDate = dateFormat.format(date);
                 Message message = new Message(content, strDate, true, contactName);
                 messageDao.insert(message);

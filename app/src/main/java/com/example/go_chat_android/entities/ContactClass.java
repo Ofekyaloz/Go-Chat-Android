@@ -19,7 +19,7 @@ public class ContactClass {
         this.server = server;
         this.last = null;
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
         String strDate = dateFormat.format(date);
         this.lastdate = strDate;
     }

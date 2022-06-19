@@ -29,6 +29,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     private final LayoutInflater mInflater;
     private List<Message> messageList;
+    private MessageViewHolder left;
+    private MessageViewHolder right;
 
     public MessageListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -37,19 +39,20 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView;
-        if (messageList.get(viewType).getSent()) {
-            itemView = mInflater.inflate(R.layout.right_message, parent, false);
-        } else {
-            itemView = mInflater.inflate(R.layout.left_message, parent, false);
-        }
-        return new MessageViewHolder(itemView);
+        left = new MessageViewHolder(mInflater.inflate(R.layout.left_message, parent, false));
+        right = new MessageViewHolder(mInflater.inflate(R.layout.right_message, parent, false));
+        return right;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         if (messageList != null) {
             final Message msg = messageList.get(position);
+            if (!msg.getSent()) {
+                left.tvContent.setText(msg.getContent());
+                left.tvDate.setText(msg.getCreated());
+                return;
+            }
             holder.tvContent.setText(msg.getContent());
             holder.tvDate.setText(msg.getCreated());
         }

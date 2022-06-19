@@ -51,7 +51,7 @@ public class Contact {
         this.server = server;
         this.last = null;
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd-mm-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
         String strDate = dateFormat.format(date);
         this.lastdate = strDate;
     }
