@@ -8,13 +8,16 @@ import androidx.room.RoomDatabase;
 
 import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.daos.MessageDao;
+import com.example.go_chat_android.daos.UserDao;
 import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.Message;
+import com.example.go_chat_android.entities.User;
 
-@Database(entities = {Contact.class, Message.class}, version = 3)
+@Database(entities = {Contact.class, Message.class, User.class}, version = 3)
 public abstract class AppDB extends RoomDatabase{
     public abstract MessageDao messageDao();
     public abstract ContactDao contactDao();
+    public abstract UserDao userDao();
     private static AppDB INSTANCE;
 
     public static AppDB getDBInstance(Context context) {

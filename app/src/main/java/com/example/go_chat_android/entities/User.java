@@ -1,9 +1,16 @@
 package com.example.go_chat_android.entities;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(tableName = "usersTable")
 public class User {
+    @NonNull
+    @PrimaryKey
     private String Username;
     private String Password;
     private String Email;
@@ -12,7 +19,7 @@ public class User {
     private List<Contact> Contacts;
     private String Connection;
 
-    public User(String Username, String Password, String NickName, String Email, String Photo,Contact Contacts, String Connection) {
+    public User(String Username, String Password, String NickName, String Email, String Photo, List<Contact> Contacts, String Connection) {
         this.Username = Username;
         this.Password = Password;
         this.Email = Email;

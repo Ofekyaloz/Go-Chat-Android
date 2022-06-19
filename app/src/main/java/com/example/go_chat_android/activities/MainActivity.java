@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             String newToken = instanceIdResult.getToken();
         });
 
-
         contactAPI = new APIService();
 
         contacts = new ViewModelProvider(this).get(SampleViewModel.class);
