@@ -1,35 +1,26 @@
 package com.example.go_chat_android.api;
 
 import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.entities.Invitation;
 import com.example.go_chat_android.entities.LoginFields;
+import com.example.go_chat_android.entities.Message;
+import com.example.go_chat_android.entities.Transfer;
 import com.example.go_chat_android.entities.User;
-
+import com.example.go_chat_android.entities.contactFields;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface WebServiceApi {
     @GET("Contacts")
-    Call<List<Contact>> getContacts();
+    Call<List<Contact>> getContacts(@Header("Authorization") String token);
 
     @POST("Contacts")
-    Call<Void> addContacts(@Body Contact contact);
-
-    @GET("Contacts/{id}")
-    Call<Contact> getContact(@Path("id") String id, @Header("Authorization") String str);
-
-    @PUT("Contacts/{id}")
-    Call<Contact> editContact(@Path("id") String id);
-
-    @DELETE("Contacts/{id}")
-    Call<Contact> deleteContact(@Path("id") String id);
+    Call<Void> addContact(@Body contactFields contact, @Header("Authorization") String token);
 
     @POST("Users/Login")
     Call<String> login(@Body LoginFields loginFields);
@@ -37,6 +28,15 @@ public interface WebServiceApi {
     @POST("Users/Register")
     Call<String> register(@Body User user);
 
-//    @POST("Contacts/{id}/Messages/")
+    @GET("Contacts/{id}/Messages/")
+    Call<List<Message>> getMessages(@Path("id") String id,@Header("Authorization") String token);
 
+    @POST("Contacts/{id}/Messages/")
+    Call<Void> addMessage(@Path("id") String id, @Body String content,@Header("Authorization") String token);
+
+    @POST("transfer")
+    Call<Void> transfer(@Body Transfer transfer);
+
+    @POST("invitations")
+    Call<Void> invitations(@Body Invitation invitation);
 }

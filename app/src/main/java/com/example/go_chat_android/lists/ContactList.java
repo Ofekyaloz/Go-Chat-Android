@@ -21,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,35 +55,40 @@ public class ContactList extends AppCompatActivity {
             startActivity(i);
         });
 
-        contactList = new ArrayList<>();
+        contactList = contactDao.index();
 
         listView = findViewById(R.id.list_view);
         adapter = new ContactAdapter(getApplicationContext(), contactList);
         listView.setAdapter(adapter);
         listView.setClickable(true);
 
-        gson = new GsonBuilder()
-                .setLenient()
-                .create();
-        retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        webServiceApi = retrofit.create(WebServiceApi.class);
-        Call<List<Contact>> call = webServiceApi.getContacts();
-        call.enqueue(new Callback<List<Contact>>() {
-            @Override
-            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                if (response.isSuccessful()) {
+        new Thread(() -> {
+            String token = MyApplication.token;
+            gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(MyApplication.BaseUrl)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            webServiceApi = retrofit.create(WebServiceApi.class);
+            Call<List<Contact>> call = webServiceApi.getContacts("Bearer " + token);
+            call.enqueue(new Callback<List<Contact>>() {
+                @Override
+                public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                    if (response.isSuccessful()) {
+//                        contactList = response.body();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Contact>> call, Throwable t) {
 
                 }
-            }
+            });
 
-            @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {
 
-            }
-        });
+        }).start();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

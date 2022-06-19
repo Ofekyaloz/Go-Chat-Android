@@ -17,4 +17,5 @@
     <string name="etSend">Send</string>
     <string name="btnAdd">Add</string>
     <string name="etConnection">Connection</string>
+    <string name="btnSet">SET</string>
 </resources>

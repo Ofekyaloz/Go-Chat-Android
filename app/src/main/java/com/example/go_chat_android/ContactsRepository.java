@@ -55,7 +55,7 @@ public class ContactsRepository {
     }
 
     public void reload() {
-        api.get();
+//        api.get();
     }
 }
 
