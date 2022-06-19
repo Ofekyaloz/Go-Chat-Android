@@ -5,8 +5,8 @@ import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.Invitation;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.Message;
+import com.example.go_chat_android.entities.RegisterUser;
 import com.example.go_chat_android.entities.Transfer;
-import com.example.go_chat_android.entities.User;
 import com.example.go_chat_android.entities.contactFields;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public interface WebServiceApi {
     Call<String> login(@Body LoginFields loginFields);
 
     @POST("Users/Register")
-    Call<String> register(@Body User user);
+    Call<String> register(@Body RegisterUser user);
 
     @GET("Contacts/{id}/Messages/")
     Call<List<Message>> getMessages(@Path("id") String id,@Header("Authorization") String token);

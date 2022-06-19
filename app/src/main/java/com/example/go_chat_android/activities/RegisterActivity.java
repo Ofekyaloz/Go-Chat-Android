@@ -7,16 +7,19 @@ import android.provider.MediaStore;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.go_chat_android.MyApplication;
-import com.example.go_chat_android.R;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.databinding.ActivityRegisterBinding;
-import com.example.go_chat_android.entities.User;
+import com.example.go_chat_android.entities.RegisterUser;
 import com.example.go_chat_android.lists.ContactList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -97,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             tvError.setVisibility(View.INVISIBLE);
             new Thread(() -> {
-                User user = new User(username,password, nickname, email , "", "http:localhost:7265");
+                RegisterUser user = new RegisterUser(username,password, nickname, email , "", null,"http:localhost:7265");
                 gson = new GsonBuilder()
                         .setLenient()
                         .create();

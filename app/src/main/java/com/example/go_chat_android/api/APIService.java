@@ -8,7 +8,7 @@ import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.LoginFields;
 import com.example.go_chat_android.entities.Message;
-import com.example.go_chat_android.entities.User;
+import com.example.go_chat_android.entities.RegisterUser;
 import com.example.go_chat_android.entities.contactFields;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -73,7 +73,7 @@ public class APIService {
         });
     }
 
-    public void register(User user) {
+    public void register(RegisterUser user) {
         Call<String> call = webServiceApi.register(user);
         call.enqueue(new Callback<String>() {
             @Override
