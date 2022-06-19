@@ -24,6 +24,14 @@ public class ContactClass {
         this.lastdate = strDate;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public String getServer() {
         return server;
     }

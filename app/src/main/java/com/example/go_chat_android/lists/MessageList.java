@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -95,6 +96,8 @@ public class MessageList extends AppCompatActivity {
                     // gili add messages to the dao
                     if (response.isSuccessful()) {
 //                        messageList = response.body();
+                        adapter.setMessageList(response.body());
+                        adapter.notifyDataSetChanged();
                     }
                 }
 

@@ -29,7 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mainBinding;
-    private SampleViewModel contacts;
     private APIService apiService;
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             newToken.length();
         });
 
-        contacts = new ViewModelProvider(this).get(SampleViewModel.class);
 
         mainBinding.btnGotoRegister.setOnClickListener(v -> {
             Intent intent = new Intent(this, RegisterActivity.class);
