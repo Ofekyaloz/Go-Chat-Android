@@ -29,8 +29,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     private final LayoutInflater mInflater;
     private List<Message> messageList;
-    private MessageViewHolder left;
-    private MessageViewHolder right;
 
     public MessageListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -39,20 +37,19 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        left = new MessageViewHolder(mInflater.inflate(R.layout.left_message, parent, false));
-        right = new MessageViewHolder(mInflater.inflate(R.layout.right_message, parent, false));
-        return right;
+        View itemView;
+        if (viewType == 1) {
+            itemView = mInflater.inflate(R.layout.right_message, parent, false);
+        } else {
+            itemView = mInflater.inflate(R.layout.left_message, parent, false);
+        }
+        return new MessageViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         if (messageList != null) {
             final Message msg = messageList.get(position);
-            if (!msg.getSent()) {
-                left.tvContent.setText(msg.getContent());
-                left.tvDate.setText(msg.getCreated());
-                return;
-            }
             holder.tvContent.setText(msg.getContent());
             holder.tvDate.setText(msg.getCreated());
         }
@@ -67,6 +64,16 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public int getItemCount() {
         if (messageList != null)
             return messageList.size();
+        return 0;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (messageList != null) {
+            if (messageList.get(position).getSent()) {
+                return 1;
+            }
+        }
         return 0;
     }
 
