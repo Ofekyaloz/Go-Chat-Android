@@ -92,9 +92,14 @@ public class MessageList extends AppCompatActivity {
             call.enqueue(new Callback<List<Message>>() {
                 @Override
                 public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                    // gili add messages to the dao
                     if (response.isSuccessful()) {
-//                        messageList = response.body();
+                        for (Message msg: messageList) {
+                            messageDao.delete(msg);
+                        }
+                        messageList = response.body();
+                        for(Message msg: messageList) {
+                            messageDao.insert(msg);
+                        }
                         adapter.setMessageList(response.body());
                         adapter.notifyDataSetChanged();
                     }

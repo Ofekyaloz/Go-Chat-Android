@@ -89,12 +89,20 @@ public class ContactList extends AppCompatActivity {
             call.enqueue(new Callback<List<ContactClass>>() {
                 @Override
                 public void onResponse(Call<List<ContactClass>> call, Response<List<ContactClass>> response) {
+//                    gili - add new contacts to dao
                     if (response.isSuccessful()) {
+                        for (Contact c : contactList) {
+                            contactDao.delete(c);
+                        }
                         List<ContactClass> List = response.body();
-                        // gili - add new contacts to dao (messages is an option)
-//                        for (ContactClass c: List) {
-//                            Contact contact = new Contact("","","")
-//                        }
+                        for (ContactClass c : List) {
+                            Contact contact = new Contact(c.getId(),c.getName(), c.getServer(), c.getLast(), c.getLastdate());
+                            contact.setUserId(MyApplication.username);
+                            contactDao.insert(contact);
+                            contactList.add(contact);
+
+                        }
+                        onResume();
                     }
                 }
 

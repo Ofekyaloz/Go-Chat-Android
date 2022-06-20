@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         mainBinding.btnLogin.setOnClickListener(v -> {
             String username = mainBinding.loginEtUsername.getText().toString();
             String password = mainBinding.loginEtPassword.getText().toString();
-            if (!Pattern.matches("[A-Za-z0-9]{4,30}$", username) ||
-                    !Pattern.matches("[A-Za-z0-9]{4,30}$", password)) {
+            if (!Pattern.matches("[A-Za-z0-9 -_]{3,30}$", username) ||
+                    !Pattern.matches("[A-Za-z0-9]{8,30}$", password)) {
                 mainBinding.loginTvError.setVisibility(View.VISIBLE);
                 return;
             }

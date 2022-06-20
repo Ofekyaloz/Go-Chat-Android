@@ -1,6 +1,7 @@
 package com.example.go_chat_android.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import com.example.go_chat_android.entities.Invitation;
 import com.example.go_chat_android.entities.contactFields;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,10 +46,17 @@ public class AddContactActivity extends AppCompatActivity {
         contactDao = db.contactDao();
 
         Button btnSave = findViewById(R.id.btnSave);
+
         btnSave.setOnClickListener(view -> {
             String contactName = addContactBinding.contactNameField.getText().toString();
             String server = addContactBinding.serverField.getText().toString();
             String contactNickname = addContactBinding.contactNicknameField.getText().toString();
+//            if (!Pattern.matches("[A-Za-z0-9 -_]{3,30}$", contactName) ||
+//                    !Pattern.matches("[A-Za-z0-9 -_]{3,30}$", contactNickname) ||
+//                    !Pattern.matches("[A-Za-z0-9 :./-_]{4,30}$", server)) {
+////                mainBinding.loginTvError.setVisibility(View.VISIBLE);
+//                return;
+//            }
             String token = MyApplication.token;
             new Thread(() -> {
                 gson = new GsonBuilder()
@@ -63,7 +73,7 @@ public class AddContactActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            Contact contact = new Contact(contactName, server);
+                            Contact contact = new Contact(contactName,contactNickname, server, "", "");
                             contact.setUserId(MyApplication.username);
                             contactDao.insert(contact);
                             finish();
