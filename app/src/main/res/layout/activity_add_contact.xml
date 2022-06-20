@@ -36,6 +36,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="10dp">
 
+        <TextView
+            android:paddingTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/tv_addContactError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error, make sure your details is valid"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            android:textColor="@color/red"
+            android:paddingBottom="15dp"
+            />
+
         <EditText
             android:id="@+id/contactNameField"
             android:layout_width="match_parent"

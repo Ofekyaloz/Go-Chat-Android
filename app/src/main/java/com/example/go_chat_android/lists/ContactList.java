@@ -89,7 +89,6 @@ public class ContactList extends AppCompatActivity {
             call.enqueue(new Callback<List<ContactClass>>() {
                 @Override
                 public void onResponse(Call<List<ContactClass>> call, Response<List<ContactClass>> response) {
-//                    gili - add new contacts to dao
                     if (response.isSuccessful()) {
                         for (Contact c : contactList) {
                             contactDao.delete(c);

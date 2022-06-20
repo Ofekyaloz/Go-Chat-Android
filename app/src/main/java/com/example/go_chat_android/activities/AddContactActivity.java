@@ -51,12 +51,13 @@ public class AddContactActivity extends AppCompatActivity {
             String contactName = addContactBinding.contactNameField.getText().toString();
             String server = addContactBinding.serverField.getText().toString();
             String contactNickname = addContactBinding.contactNicknameField.getText().toString();
-//            if (!Pattern.matches("[A-Za-z0-9 -_]{3,30}$", contactName) ||
-//                    !Pattern.matches("[A-Za-z0-9 -_]{3,30}$", contactNickname) ||
-//                    !Pattern.matches("[A-Za-z0-9 :./-_]{4,30}$", server)) {
-////                mainBinding.loginTvError.setVisibility(View.VISIBLE);
-//                return;
-//            }
+            if (!Pattern.matches("[ A-Za-z0-9_-]{3,30}$", contactName) ||
+                    !Pattern.matches("[ A-Za-z0-9/-]{3,30}$", contactNickname) ||
+                    !Pattern.matches("[-A-Za-z0-9 :./_]{4,30}$", server)) {
+                findViewById(R.id.tv_addContactError).setVisibility(View.VISIBLE);
+                return;
+            }
+            findViewById(R.id.tv_addContactError).setVisibility(View.INVISIBLE);
             String token = MyApplication.token;
             new Thread(() -> {
                 gson = new GsonBuilder()

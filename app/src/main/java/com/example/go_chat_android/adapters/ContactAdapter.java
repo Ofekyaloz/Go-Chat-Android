@@ -40,7 +40,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         TextView time = convertView.findViewById(R.id.time);
 
         imageView.setImageResource(R.drawable.icon_user_default);
-        userName.setText(contact.getName());
+        userName.setText(contact.getNickname());
         lastMsg.setText(contact.getLast());
         time.setText(contact.getLastdate());
 

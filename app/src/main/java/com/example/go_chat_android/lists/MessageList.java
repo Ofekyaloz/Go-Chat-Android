@@ -96,11 +96,19 @@ public class MessageList extends AppCompatActivity {
                         for (Message msg: messageList) {
                             messageDao.delete(msg);
                         }
+                        Message last = null;
                         messageList = response.body();
                         for(Message msg: messageList) {
+                            msg.setContactName(contactName);
                             messageDao.insert(msg);
+                            last = msg;
                         }
-                        adapter.setMessageList(response.body());
+
+                        // update the contact in the contact list - gili
+                        if (last != null) {
+
+                        }
+                        adapter.setMessageList(messageList);
                         adapter.notifyDataSetChanged();
                     }
                 }
