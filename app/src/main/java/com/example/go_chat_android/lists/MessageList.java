@@ -19,7 +19,9 @@ import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.adapters.MessageListAdapter;
 import com.example.go_chat_android.api.WebServiceApi;
+import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.daos.MessageDao;
+import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.ContactClass;
 import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.Message;
@@ -44,6 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MessageList extends AppCompatActivity {
     private AppDB db;
     private MessageDao messageDao;
+    private ContactDao contactDao;
     private List<Message> messageList;
     private String contactName;
     private EditText etInput;
@@ -65,6 +68,7 @@ public class MessageList extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "MessagesDB").allowMainThreadQueries().build();
 
         messageDao = db.messageDao();
+        contactDao = db.contactDao();
 
         contactName = getIntent().getExtras().getString("contactName");
         MyApplication.friendBaseurl = getIntent().getExtras().getString("url");
@@ -112,7 +116,11 @@ public class MessageList extends AppCompatActivity {
 
                         // update the contact in the contact list - gili
                         if (last != null) {
-
+//                            List<Contact> c = contactDao.getContacts(MyApplication.username);
+//                            Contact contact = contactDao.getContact(MyApplication.username,contactName);
+//                            contact.setLast(last.getContent());
+//                            contact.setLastdate(last.getCreated());
+//                            contactDao.update(contact);
                         }
                         onResume();
                     }

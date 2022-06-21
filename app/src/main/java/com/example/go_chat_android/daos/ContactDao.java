@@ -16,6 +16,10 @@ public interface ContactDao {
     List<Contact> index();
     @Query("SELECT * FROM contactsTable WHERE userId = :userId")
     List<Contact> getContacts(String userId);
+
+    @Query("SELECT * FROM contactsTable WHERE userId = :userId AND name = :contactName")
+    Contact getContact(String userId, String contactName);
+
     @Insert
     void insert(Contact... contacts);
     @Update
