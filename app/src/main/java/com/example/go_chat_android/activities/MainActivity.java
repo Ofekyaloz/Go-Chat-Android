@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
+        final String[] newToken = {null};
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, instanceIdResult -> {
-            String newToken = instanceIdResult.getToken();
-            newToken.length();
+            newToken[0] = instanceIdResult.getToken();
+            newToken[0].length();
         });
 
         contacts = new ViewModelProvider(this).get(SampleViewModel.class);
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
                 webServiceApi = retrofit.create(WebServiceApi.class);
-                LoginFields loginFields = new LoginFields(username, password);
+                LoginFields loginFields = new LoginFields(username, password, newToken[0]);
                 Call<String> call = webServiceApi.login(loginFields);
                 call.enqueue(new Callback<String>() {
                     @Override
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 //                            apiService.get(MyApplication.token);
                             Intent intent = new Intent(getApplicationContext(), ContactList.class);
                             startActivity(intent);
+
                         } else {
                             mainBinding.loginTvError.setVisibility(View.VISIBLE);
                         }
