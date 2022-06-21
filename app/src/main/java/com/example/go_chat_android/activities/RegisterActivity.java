@@ -33,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
     private Gson gson;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +60,19 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            if(!Pattern.matches(".*[0-9].*", password)) {
+            if (!Pattern.matches(".*[0-9].*", password)) {
                 tvError.setText("The password must contain at least 1 numeric character!");
                 tvError.setVisibility(View.VISIBLE);
                 return;
             }
 
-            if(!Pattern.matches(".*[a-z].*", password)) {
+            if (!Pattern.matches(".*[a-z].*", password)) {
                 tvError.setText("The password must contain at least 1 n lowercase character!");
                 tvError.setVisibility(View.VISIBLE);
                 return;
             }
 
-            if(!Pattern.matches(".*[A-Z].*", password)) {
+            if (!Pattern.matches(".*[A-Z].*", password)) {
                 tvError.setText("The password must contain at least 1 uppercase character!");
                 tvError.setVisibility(View.VISIBLE);
                 return;
@@ -85,14 +86,14 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             String username = registerBinding.etRegisterUsername.getText().toString();
-            if (!Pattern.matches("[A-Za-z0-9]{4,30}$", username)) {
+            if (!Pattern.matches("[A-Za-z0-9 _-]{3,30}$", username)) {
                 tvError.setText("Invalid username!");
                 tvError.setVisibility(View.VISIBLE);
                 return;
             }
 
             String nickname = registerBinding.etRegisterNickname.getText().toString();
-            if (!Pattern.matches("[A-Za-z0-9]{4,30}$", nickname)) {
+            if (!Pattern.matches("[A-Za-z0-9 _-]{3,30}$", nickname)) {
                 tvError.setText("Invalid nickname!");
                 tvError.setVisibility(View.VISIBLE);
                 return;
@@ -100,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             tvError.setVisibility(View.INVISIBLE);
             new Thread(() -> {
-                RegisterUser user = new RegisterUser(username,password, nickname, email , "", null,"http:localhost:7265");
+                RegisterUser user = new RegisterUser(username, password, nickname, email, "", null, MyApplication.BaseUrl);
                 gson = new GsonBuilder()
                         .setLenient()
                         .create();

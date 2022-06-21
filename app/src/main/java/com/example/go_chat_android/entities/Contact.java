@@ -33,9 +33,11 @@ public class Contact {
     }
 
     private String name;
+    private String nickname;
     private String server;
     private String last;
     private String lastdate;
+
 
     @NonNull
     public String getName() {
@@ -46,14 +48,22 @@ public class Contact {
         this.name = name;
     }
 
-    public Contact(@NonNull String name, String server) {
+//    public Contact(@NonNull String name, String server) {
+//        this.name = name;
+//        this.server = server;
+//        this.last = null;
+//        Date date = Calendar.getInstance().getTime();
+//        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
+//        String strDate = dateFormat.format(date);
+//        this.lastdate = strDate;
+//    }
+
+    public Contact(String name, String nickname, String server, String last, String lastdate) {
+        this.nickname = nickname;
         this.name = name;
         this.server = server;
-        this.last = null;
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(date);
-        this.lastdate = strDate;
+        this.last = last;
+        this.lastdate = lastdate;
     }
 
     public String getServer() {
@@ -78,5 +88,9 @@ public class Contact {
 
     public void setLastdate(String lastdate) {
         this.lastdate = lastdate;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

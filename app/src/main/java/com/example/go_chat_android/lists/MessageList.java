@@ -25,7 +25,11 @@ import com.example.go_chat_android.entities.Transfer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,7 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MessageList extends AppCompatActivity {
     private AppDB db;
     private MessageDao messageDao;
-    private ArrayList<Message> messageList;
+    private List<Message> messageList;
     private String contactName;
     private EditText etInput;
     private Button btnSend;
@@ -59,12 +63,12 @@ public class MessageList extends AppCompatActivity {
         messageDao = db.messageDao();
 
         contactName = getIntent().getExtras().getString("contactName");
+        MyApplication.friendBaseurl = getIntent().getExtras().getString("url");
 
         tvName = findViewById(R.id.tvFriendNickname);
-        tvName.setText("" + contactName + "");
+        tvName.setText(contactName);
 
         messageList = new ArrayList<>();
-        messageList.add(new Message("132", "123", true,contactName));
 
         RVMessageList = findViewById(R.id.lvMessageList);
         adapter = new MessageListAdapter(this);
@@ -88,7 +92,25 @@ public class MessageList extends AppCompatActivity {
             call.enqueue(new Callback<List<Message>>() {
                 @Override
                 public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                    if (response.isSuccessful()) {
+                        for (Message msg: messageList) {
+                            messageDao.delete(msg);
+                        }
+                        Message last = null;
+                        messageList = response.body();
+                        for(Message msg: messageList) {
+                            msg.setContactName(contactName);
+                            messageDao.insert(msg);
+                            last = msg;
+                        }
 
+                        // update the contact in the contact list - gili
+                        if (last != null) {
+
+                        }
+                        adapter.setMessageList(messageList);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
 
                 @Override
@@ -102,7 +124,10 @@ public class MessageList extends AppCompatActivity {
         btnSend.setOnClickListener(v -> {
             String content = etInput.getText().toString();
             if (etInput.length() != 0) {
-                Message message = new Message(content, java.time.LocalDateTime.now().toString(), true, contactName);
+                Date date = Calendar.getInstance().getTime();
+                DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
+                String strDate = dateFormat.format(date);
+                Message message = new Message(content, strDate, true, contactName);
                 messageDao.insert(message);
                 onResume();
                 RVMessageList.scrollToPosition(messageList.size() - 1);
@@ -124,6 +149,14 @@ public class MessageList extends AppCompatActivity {
                 }).start();
 
                 new Thread(() -> {
+                    Gson gson2 = new GsonBuilder()
+                            .setLenient()
+                            .create();
+                    Retrofit retrofit2 = new Retrofit.Builder()
+                            .baseUrl(MyApplication.friendBaseurl)
+                            .addConverterFactory(GsonConverterFactory.create(gson2))
+                            .build();
+                    webServiceApi = retrofit2.create(WebServiceApi.class);
                     Transfer transfer = new Transfer(MyApplication.username, contactName, content);
                     Call<Void> call = webServiceApi.transfer(transfer);
                     call.enqueue(new Callback<Void>() {

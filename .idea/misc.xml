@@ -15,6 +15,21 @@
         <entry key="..\:/Users/gilig/StudioProjects/Go-Chat-Android/app/src/main/res/layout/activity_user.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/gilig/StudioProjects/Go-Chat-Android/app/src/main/res/layout/custom_list_item.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/gilig/StudioProjects/Go-Chat-Android/app/src/main/res/layout/right_message.xml" value="0.1" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/drawable-xxhdpi/hollow_background2.xml" value="0.1795" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/drawable-xxhdpi/textInput.xml" value="0.1795" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/drawable/hollow_background.xml" value="0.1795" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/drawable/right_message.xml" value="0.1" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout-v31/right_message.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/activity_add_contact.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/activity_contact_list.xml" value="0.25" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/activity_message_list.xml" value="0.25" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/activity_settings.xml" value="0.16168478260869565" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/contact_list_item.xml" value="0.25" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/left_message.xml" value="0.25" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/message.xml" value="0.176" />
+        <entry key="..\:/Users/ofek1/AndroidStudioProjects/Go-Chat-Android/app/src/main/res/layout/right_message.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2265" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable/background.xml" value="0.2265" />
         <entry key="..\:/Users/ofek1/AndroidStudioProjects/GoChatAndroid/app/src/main/res/drawable/button_background_color.xml" value="0.169" />

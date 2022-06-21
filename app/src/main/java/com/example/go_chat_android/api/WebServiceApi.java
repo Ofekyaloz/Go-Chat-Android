@@ -1,6 +1,7 @@
 package com.example.go_chat_android.api;
 
 import com.example.go_chat_android.entities.Contact;
+import com.example.go_chat_android.entities.ContactClass;
 import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.Invitation;
 import com.example.go_chat_android.entities.LoginFields;
@@ -20,7 +21,7 @@ import retrofit2.http.Path;
 
 public interface WebServiceApi {
     @GET("Contacts")
-    Call<List<Contact>> getContacts(@Header("Authorization") String token);
+    Call<List<ContactClass>> getContacts(@Header("Authorization") String token);
 
     @POST("Contacts")
     Call<Void> addContact(@Body contactFields contact, @Header("Authorization") String token);

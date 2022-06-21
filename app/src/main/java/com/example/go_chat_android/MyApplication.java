@@ -13,6 +13,7 @@ public class MyApplication extends Application {
     public static String token;
     public static List<Contact> contactList;
     public static String username;
+    public static String friendBaseurl;
 
     @Override
     public void onCreate() {

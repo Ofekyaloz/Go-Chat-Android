@@ -1,6 +1,7 @@
 package com.example.go_chat_android.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import com.example.go_chat_android.entities.Invitation;
 import com.example.go_chat_android.entities.contactFields;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,27 +46,35 @@ public class AddContactActivity extends AppCompatActivity {
         contactDao = db.contactDao();
 
         Button btnSave = findViewById(R.id.btnSave);
+
         btnSave.setOnClickListener(view -> {
             String contactName = addContactBinding.contactNameField.getText().toString();
             String server = addContactBinding.serverField.getText().toString();
             String contactNickname = addContactBinding.contactNicknameField.getText().toString();
+            if (!Pattern.matches("[ A-Za-z0-9_-]{3,30}$", contactName) ||
+                    !Pattern.matches("[ A-Za-z0-9/-]{3,30}$", contactNickname) ||
+                    !Pattern.matches("[-A-Za-z0-9 :./_]{4,30}$", server)) {
+                findViewById(R.id.tv_addContactError).setVisibility(View.VISIBLE);
+                return;
+            }
+            findViewById(R.id.tv_addContactError).setVisibility(View.INVISIBLE);
             String token = MyApplication.token;
-            gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(MyApplication.BaseUrl)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            webServiceApi = retrofit.create(WebServiceApi.class);
             new Thread(() -> {
+                gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(MyApplication.BaseUrl)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+                webServiceApi = retrofit.create(WebServiceApi.class);
                 contactFields contactFields = new contactFields(contactName, contactNickname, server);
                 Call<Void> call = webServiceApi.addContact(contactFields, "Bearer " + token);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            Contact contact = new Contact(contactName, server);
+                            Contact contact = new Contact(contactName,contactNickname, server, "", "");
                             contact.setUserId(MyApplication.username);
                             contactDao.insert(contact);
                             finish();
@@ -80,7 +91,16 @@ public class AddContactActivity extends AppCompatActivity {
             }).start();
 
             new Thread(() -> {
-                Invitation invitation = new Invitation(MyApplication.username, contactName, "");
+                MyApplication.friendBaseurl = server;
+                Gson gson2 = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit2 = new Retrofit.Builder()
+                        .baseUrl(server)
+                        .addConverterFactory(GsonConverterFactory.create(gson2))
+                        .build();
+                webServiceApi = retrofit2.create(WebServiceApi.class);
+                Invitation invitation = new Invitation(MyApplication.username, contactName, server);
                 Call<Void> call = webServiceApi.invitations(invitation);
                 call.enqueue(new Callback<Void>() {
                     @Override
