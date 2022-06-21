@@ -1,45 +1,21 @@
 package com.example.go_chat_android.entities;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "messagesTable")
-public class Message {
-    @NonNull
-    @PrimaryKey(autoGenerate = true)
+public class MessageClass {
     private int id;
     private String content;
     private String created;
     private Boolean sent;
 
-    public Message() {}
+    public MessageClass() {}
 
-    public Message(String content, String created, Boolean sent, String contactName) {
+    public MessageClass(String content, String created, Boolean sent, String contactName) {
         this.content = content;
         this.created = created;
         this.sent = sent;
         this.contactName = contactName;
     }
 
-    public Message(MessageClass msg, String userId) {
-        this.content = msg.getContent();
-        this.created = msg.getCreated();
-        this.sent = msg.getSent();
-        this.contactName = msg.getContactName();
-        this.userId = userId;
-    }
-
-    private String userId;
     private String contactName;
-
-    public String getUserId()
-    {
-        return userId;
-    }
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public int getId() {
         return id;

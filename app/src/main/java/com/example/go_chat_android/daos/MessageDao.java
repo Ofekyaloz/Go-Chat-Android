@@ -14,8 +14,8 @@ import java.util.List;
 public interface MessageDao {
     @Query("SELECT * FROM messagesTable")
     List<Message> index();
-    @Query("SELECT * FROM messagesTable WHERE contactName = :contactName")
-    List<Message> get(String contactName);
+    @Query("SELECT * FROM messagesTable WHERE contactName = :contactName AND userId = :username")
+    List<Message> get(String contactName, String username);
     @Insert
     void insert(Message... messages);
     @Update

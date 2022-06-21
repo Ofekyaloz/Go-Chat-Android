@@ -7,7 +7,7 @@ import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.LoginFields;
-import com.example.go_chat_android.entities.Message;
+import com.example.go_chat_android.entities.MessageClass;
 import com.example.go_chat_android.entities.RegisterUser;
 import com.example.go_chat_android.entities.contactFields;
 import com.google.gson.Gson;
@@ -92,17 +92,17 @@ public class APIService {
     }
 
     public void getMessages(String contact, String token) {
-        Call<List<Message>> call = webServiceApi.getMessages(contact,"Bearer " + token);
-        call.enqueue(new Callback<List<Message>>() {
+        Call<List<MessageClass>> call = webServiceApi.getMessages(contact,"Bearer " + token);
+        call.enqueue(new Callback<List<MessageClass>>() {
             @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+            public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
                 if (response.isSuccessful()) {
-                    List<Message> messages = response.body();
+                    List<MessageClass> messages = response.body();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
+            public void onFailure(Call<List<MessageClass>> call, Throwable t) {
 
             }
         });

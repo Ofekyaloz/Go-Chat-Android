@@ -12,7 +12,7 @@ public class ContactClass {
     private String server;
     private String last;
     private String lastdate;
-    private List<Message> messages;
+    private List<MessageClass> messages;
 
     public ContactClass(String name, String server) {
         this.name = name;

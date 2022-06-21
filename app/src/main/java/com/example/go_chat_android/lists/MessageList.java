@@ -19,8 +19,10 @@ import com.example.go_chat_android.R;
 import com.example.go_chat_android.adapters.MessageListAdapter;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.daos.MessageDao;
+import com.example.go_chat_android.entities.ContactClass;
 import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.Message;
+import com.example.go_chat_android.entities.MessageClass;
 import com.example.go_chat_android.entities.Transfer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -88,19 +90,20 @@ public class MessageList extends AppCompatActivity {
         webServiceApi = retrofit.create(WebServiceApi.class);
         String token = MyApplication.token;
         new Thread(() -> {
-            Call<List<Message>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
-            call.enqueue(new Callback<List<Message>>() {
+            Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
+            call.enqueue(new Callback<List<MessageClass>>() {
                 @Override
-                public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
                     if (response.isSuccessful()) {
                         for (Message msg: messageList) {
                             messageDao.delete(msg);
                         }
-                        Message last = null;
-                        messageList = response.body();
-                        for(Message msg: messageList) {
+                        MessageClass last = null;
+                        List<MessageClass> List = response.body();
+                        for(MessageClass msg: List) {
                             msg.setContactName(contactName);
-                            messageDao.insert(msg);
+                            Message message = new Message(msg, MyApplication.username);
+                            messageDao.insert(message);
                             last = msg;
                         }
 
@@ -114,7 +117,7 @@ public class MessageList extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<List<Message>> call, Throwable t) {
+                public void onFailure(Call<List<MessageClass>> call, Throwable t) {
 
                 }
             });
@@ -128,6 +131,7 @@ public class MessageList extends AppCompatActivity {
                 DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
                 String strDate = dateFormat.format(date);
                 Message message = new Message(content, strDate, true, contactName);
+                message.setUserId(MyApplication.username);
                 messageDao.insert(message);
                 onResume();
                 RVMessageList.scrollToPosition(messageList.size() - 1);
@@ -180,7 +184,7 @@ public class MessageList extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         messageList.clear();
-        messageList.addAll(messageDao.get(contactName));
+        messageList.addAll(messageDao.get(contactName, MyApplication.username));
         adapter.notifyDataSetChanged();
     }
 }

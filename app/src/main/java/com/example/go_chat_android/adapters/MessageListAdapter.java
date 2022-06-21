@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.entities.Message;
+import com.example.go_chat_android.entities.MessageClass;
 
 import java.util.List;
 
