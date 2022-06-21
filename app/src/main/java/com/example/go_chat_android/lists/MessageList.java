@@ -209,10 +209,11 @@ public class MessageList extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<MessageClass>> call, Throwable t) {
-
+                    swipeContainer.setRefreshing(false);
                 }
             });
         }).start());
+
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,

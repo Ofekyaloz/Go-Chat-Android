@@ -153,7 +153,7 @@ public class ContactList extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<List<ContactClass>> call, Throwable t) {
-
+                            swipeContainer.setRefreshing(false);
                         }
                     });
                 }).start());
