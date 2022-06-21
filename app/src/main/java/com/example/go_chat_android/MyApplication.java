@@ -11,7 +11,6 @@ public class MyApplication extends Application {
     public static Context context;
     public static String BaseUrl;
     public static String token;
-    public static List<Contact> contactList;
     public static String username;
     public static String friendBaseurl;
 

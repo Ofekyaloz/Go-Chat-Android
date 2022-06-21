@@ -44,7 +44,7 @@
         </LinearLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refreshLayout"
+            android:id="@+id/messageRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/llInput"
@@ -58,13 +58,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/llContactBar"
                 tools:listitem="@layout/left_message"
                 />
-<!--                    <ListView-->
-<!--                        android:id="@+id/lvMessageList"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="0dp"-->
-<!--                        app:layout_constraintBottom_toTopOf="@+id/llInput"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/llContactBar"-->
-<!--                        tools:listitem="@layout/left_message" />-->
+
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 

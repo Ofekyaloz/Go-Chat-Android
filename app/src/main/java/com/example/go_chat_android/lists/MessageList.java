@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.go_chat_android.AppDB;
 import com.example.go_chat_android.MyApplication;
@@ -49,6 +50,7 @@ public class MessageList extends AppCompatActivity {
     private Button btnSend;
     private TextView tvName;
     private RecyclerView RVMessageList;
+    private SwipeRefreshLayout swipeContainer;
     private MessageListAdapter adapter;
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
@@ -89,6 +91,7 @@ public class MessageList extends AppCompatActivity {
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
         String token = MyApplication.token;
+
         new Thread(() -> {
             Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
             call.enqueue(new Callback<List<MessageClass>>() {
@@ -111,8 +114,7 @@ public class MessageList extends AppCompatActivity {
                         if (last != null) {
 
                         }
-                        adapter.setMessageList(messageList);
-                        adapter.notifyDataSetChanged();
+                        onResume();
                     }
                 }
 
@@ -177,6 +179,45 @@ public class MessageList extends AppCompatActivity {
                 }).start();
             }
         });
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.messageRefreshLayout);
+        swipeContainer.setOnRefreshListener(() ->
+                new Thread(() -> {
+            Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
+            call.enqueue(new Callback<List<MessageClass>>() {
+                @Override
+                public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
+                    if (response.isSuccessful()) {
+                        for (Message msg: messageList) {
+                            messageDao.delete(msg);
+                        }
+                        MessageClass last = null;
+                        List<MessageClass> List = response.body();
+                        for(MessageClass msg: List) {
+                            msg.setContactName(contactName);
+                            Message message = new Message(msg, MyApplication.username);
+                            messageDao.insert(message);
+                            last = msg;
+                        }
+                        swipeContainer.setRefreshing(false);
+                        // update the contact in the contact list - gili
+                        if (last != null) {
+
+                        }
+                        onResume();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<MessageClass>> call, Throwable t) {
+
+                }
+            });
+        }).start());
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
     }
 
     @SuppressLint("NotifyDataSetChanged")

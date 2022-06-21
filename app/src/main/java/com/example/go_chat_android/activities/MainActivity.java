@@ -29,7 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mainBinding;
-    private APIService apiService;
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
     private Gson gson;
@@ -53,53 +52,45 @@ public class MainActivity extends AppCompatActivity {
 
         mainBinding.btnLogin.setOnClickListener(v -> {
             String username = mainBinding.loginEtUsername.getText().toString();
-//            String password = mainBinding.loginEtPassword.getText().toString();
-//            if (!Pattern.matches("[ A-Za-z0-9/-]{3,30}$", username) ||
-//                    !Pattern.matches("[ A-Za-z0-9/-]{4,30}$", password)) {
-//                mainBinding.loginTvError.setVisibility(View.VISIBLE);
-//                return;
-//            }
-//            new Thread(() -> {
-//                gson = new GsonBuilder()
-//                        .setLenient()
-//                        .create();
-//                retrofit = new Retrofit.Builder()
-//                        .baseUrl(MyApplication.BaseUrl)
-//                        .addConverterFactory(GsonConverterFactory.create(gson))
-//                        .build();
-//                webServiceApi = retrofit.create(WebServiceApi.class);
-//                LoginFields loginFields = new LoginFields(username, password, newToken[0]);
-//                Call<String> call = webServiceApi.login(loginFields);
-//                call.enqueue(new Callback<String>() {
-//                    @Override
-//                    public void onResponse(Call<String> call, Response<String> response) {
-//                        if (response.isSuccessful()) {
-//                            mainBinding.loginTvError.setVisibility(View.INVISIBLE);
-//                            MyApplication.token = response.body();
-//                            MyApplication.username = username;
-////                            apiService = new APIService();
-////                            apiService.get(MyApplication.token);
-//                            Intent intent = new Intent(getApplicationContext(), ContactList.class);
-//                            startActivity(intent);
-//
-//                        } else {
-//                            mainBinding.loginTvError.setVisibility(View.VISIBLE);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<String> call, Throwable t) {
-//                        mainBinding.loginTvError.setVisibility(View.VISIBLE);
-//                    }
+            String password = mainBinding.loginEtPassword.getText().toString();
+            if (!Pattern.matches("[ A-Za-z0-9/-]{3,30}$", username) ||
+                    !Pattern.matches("[ A-Za-z0-9/-]{4,30}$", password)) {
+                mainBinding.loginTvError.setVisibility(View.VISIBLE);
+                return;
+            }
+            new Thread(() -> {
+                gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(MyApplication.BaseUrl)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+                webServiceApi = retrofit.create(WebServiceApi.class);
+                LoginFields loginFields = new LoginFields(username, password, newToken[0]);
+                Call<String> call = webServiceApi.login(loginFields);
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.isSuccessful()) {
+                            mainBinding.loginTvError.setVisibility(View.INVISIBLE);
+                            MyApplication.token = response.body();
+                            MyApplication.username = username;
+                            Intent intent = new Intent(getApplicationContext(), ContactList.class);
+                            startActivity(intent);
 
-    //            });
-     //       }).start();
+                        } else {
+                            mainBinding.loginTvError.setVisibility(View.VISIBLE);
+                        }
+                    }
 
-            MyApplication.username = username;
-//                            apiService = new APIService();
-//                            apiService.get(MyApplication.token);
-            Intent intent = new Intent(getApplicationContext(), ContactList.class);
-            startActivity(intent);
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mainBinding.loginTvError.setVisibility(View.VISIBLE);
+                    }
+
+                });
+            }).start();
         });
 
         mainBinding.btnSettings.setOnClickListener(v -> {
