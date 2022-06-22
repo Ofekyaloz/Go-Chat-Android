@@ -167,7 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
             String picturePath = cursor.getString(column);
             cursor.close();
             Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-            imageView.setImageBitmap(thumbnail);
+//            imageView.setImageBitmap(thumbnail);
             image = thumbnail;
 
             if (image != null) {
