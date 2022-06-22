@@ -1,6 +1,10 @@
 package com.example.go_chat_android.lists;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,6 +13,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.room.Room;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -50,44 +55,9 @@ public class ContactList extends AppCompatActivity {
     private ListView listView;
     private ContactAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
+    private String token;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_list);
-
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
-
-        contactDao = db.contactDao();
-
-        FloatingActionButton btnAdd = findViewById(R.id.btnAddContact);
-        btnAdd.setOnClickListener(view -> {
-            Intent i = new Intent(this, AddContactActivity.class);
-            startActivity(i);
-        });
-
-        contactList = contactDao.getContacts(MyApplication.username);
-
-        listView = findViewById(R.id.list_view);
-        adapter = new ContactAdapter(getApplicationContext(), contactList);
-        listView.setAdapter(adapter);
-        listView.setClickable(true);
-
-
-//        contacts = new ViewModelProvider(this).get(SampleViewModel.class);
-//        contacts.getcontacts().observe(this, contacts -> {
-//            adapter.set
-//        });
-        String token = MyApplication.token;
-        gson = new GsonBuilder()
-                .setLenient()
-                .create();
-        retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.BaseUrl)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        webServiceApi = retrofit.create(WebServiceApi.class);
-
+    private void getContacts() {
         new Thread(() -> {
             Call<List<ContactClass>> call = webServiceApi.getContacts("Bearer " + token);
             call.enqueue(new Callback<List<ContactClass>>() {
@@ -114,8 +84,42 @@ public class ContactList extends AppCompatActivity {
                 }
             });
         }).start();
+    }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contact_list);
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
+
+        contactDao = db.contactDao();
+
+        FloatingActionButton btnAdd = findViewById(R.id.btnAddContact);
+        btnAdd.setOnClickListener(view -> {
+            Intent i = new Intent(this, AddContactActivity.class);
+            startActivity(i);
+        });
+
+        contactList = contactDao.getContacts(MyApplication.username);
+
+        listView = findViewById(R.id.list_view);
+        adapter = new ContactAdapter(getApplicationContext(), contactList);
+        listView.setAdapter(adapter);
+        listView.setClickable(true);
+
+        token = MyApplication.token;
+        gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        retrofit = new Retrofit.Builder()
+                .baseUrl(MyApplication.BaseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        webServiceApi = retrofit.create(WebServiceApi.class);
+
+       getContacts();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -170,4 +174,24 @@ public class ContactList extends AppCompatActivity {
         contactList.addAll(contactDao.getContacts(MyApplication.username));
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),
+                new IntentFilter("MyData"));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getContacts();
+        }
+    };
 }
