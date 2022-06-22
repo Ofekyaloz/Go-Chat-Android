@@ -19,10 +19,12 @@ import com.example.go_chat_android.activities.AddContactActivity;
 import com.example.go_chat_android.adapters.ContactAdapter;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.daos.ContactDao;
+import com.example.go_chat_android.daos.UserDao;
 import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.ContactClass;
 import com.example.go_chat_android.entities.Message;
 import com.example.go_chat_android.entities.MessageClass;
+import com.example.go_chat_android.entities.User;
 import com.example.go_chat_android.viewmodels.SampleViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -41,6 +43,7 @@ public class ContactList extends AppCompatActivity {
     private AppDB db;
     private ContactDao contactDao;
     private List<Contact> contactList;
+    private List<User> userList;
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
     private Gson gson;
@@ -52,7 +55,6 @@ public class ContactList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
-
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
 
@@ -87,7 +89,6 @@ public class ContactList extends AppCompatActivity {
         webServiceApi = retrofit.create(WebServiceApi.class);
 
         new Thread(() -> {
-
             Call<List<ContactClass>> call = webServiceApi.getContacts("Bearer " + token);
             call.enqueue(new Callback<List<ContactClass>>() {
                 @Override
@@ -113,6 +114,8 @@ public class ContactList extends AppCompatActivity {
                 }
             });
         }).start();
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -2,22 +2,30 @@ package com.example.go_chat_android.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.api.WebServiceApi;
+import com.example.go_chat_android.daos.UserDao;
 import com.example.go_chat_android.databinding.ActivityRegisterBinding;
 import com.example.go_chat_android.entities.RegisterUser;
+import com.example.go_chat_android.entities.User;
 import com.example.go_chat_android.lists.ContactList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -33,6 +41,10 @@ public class RegisterActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
     private Gson gson;
+    private UserDao userDao;
+    private byte[] byteImage;
+    private ImageView imageView;
+    private Bitmap image;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -40,7 +52,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         registerBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(registerBinding.getRoot());
-
 
         registerBinding.btnRegister.setOnClickListener(v -> {
             String password = registerBinding.etRegisterPassword.getText().toString();
@@ -117,6 +128,10 @@ public class RegisterActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             MyApplication.token = response.body();
                             MyApplication.username = username;
+
+                            User u = new User(username, nickname, byteImage);
+                            userDao.insert(u);
+
                             Intent intent = new Intent(getApplicationContext(), ContactList.class);
                             startActivity(intent);
                         }
@@ -133,9 +148,33 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         registerBinding.btnAddImage.setOnClickListener(v -> {
-            Intent iGallery = new Intent(Intent.ACTION_PICK);
-            iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(iGallery, GALLERY_REQ_CODE);
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setType("image/*");
+            startActivityForResult(intent, 2);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 2) {
+            Uri selectedImage = data.getData();
+            String[] path = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, path, null, null, null);
+            cursor.moveToFirst();
+            int column = cursor.getColumnIndex(path[0]);
+            String picturePath = cursor.getString(column);
+            cursor.close();
+            Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+            imageView.setImageBitmap(thumbnail);
+            image = thumbnail;
+
+            if (image != null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byteImage = baos.toByteArray();
+            }
+        }
     }
 }
