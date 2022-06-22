@@ -9,35 +9,17 @@ public class User {
     @NonNull
     @PrimaryKey
     private String Username;
-    private String Password;
-    private String Email;
     private String NickName;
     private String Photo;
-    private String Connection;
 
-    public User(String Username, String Password, String NickName, String Email, String Photo, String Connection) {
+    public User(String Username, String NickName, String Photo) {
         this.Username = Username;
-        this.Password = Password;
-        this.Email = Email;
         this.NickName = NickName;
         this.Photo = Photo;
-        this.Connection = Connection;
-    }
-
-    public String getUserName() {
-        return Username;
     }
 
     public String getUsername() {
         return Username;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public String getPassword() {
-        return Password;
     }
 
     public String getNickName() {
@@ -48,8 +30,4 @@ public class User {
         return Photo;
     }
 
-
-    public String getConnection() {
-        return Connection;
-    }
 }

@@ -45,7 +45,6 @@ public class ContactList extends AppCompatActivity {
     private ContactAdapter adapter;
 //    private SampleViewModel contacts;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,8 +108,6 @@ public class ContactList extends AppCompatActivity {
                 public void onFailure(Call<List<ContactClass>> call, Throwable t) {
                 }
             });
-
-
         }).start();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
