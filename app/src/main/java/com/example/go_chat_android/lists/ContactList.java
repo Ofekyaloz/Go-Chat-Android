@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.go_chat_android.AppDB;
 import com.example.go_chat_android.MyApplication;
@@ -20,6 +21,8 @@ import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.ContactClass;
+import com.example.go_chat_android.entities.Message;
+import com.example.go_chat_android.entities.MessageClass;
 import com.example.go_chat_android.viewmodels.SampleViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -43,7 +46,7 @@ public class ContactList extends AppCompatActivity {
     private Gson gson;
     private ListView listView;
     private ContactAdapter adapter;
-//    private SampleViewModel contacts;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,21 +71,22 @@ public class ContactList extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setClickable(true);
 
+
 //        contacts = new ViewModelProvider(this).get(SampleViewModel.class);
 //        contacts.getcontacts().observe(this, contacts -> {
 //            adapter.set
 //        });
+        String token = MyApplication.token;
+        gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        retrofit = new Retrofit.Builder()
+                .baseUrl(MyApplication.BaseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        webServiceApi = retrofit.create(WebServiceApi.class);
 
         new Thread(() -> {
-            String token = MyApplication.token;
-            gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(MyApplication.BaseUrl)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            webServiceApi = retrofit.create(WebServiceApi.class);
 
             Call<List<ContactClass>> call = webServiceApi.getContacts("Bearer " + token);
             call.enqueue(new Callback<List<ContactClass>>() {
@@ -94,7 +98,7 @@ public class ContactList extends AppCompatActivity {
                         }
                         List<ContactClass> List = response.body();
                         for (ContactClass c : List) {
-                            Contact contact = new Contact(c.getId(),c.getName(), c.getServer(), c.getLast(), c.getLastdate());
+                            Contact contact = new Contact(c.getId(), c.getName(), c.getServer(), c.getLast(), c.getLastdate());
                             contact.setUserId(MyApplication.username);
                             contactDao.insert(contact);
                             contactList.add(contact);
@@ -119,6 +123,41 @@ public class ContactList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.contactsRefreshLayout);
+        swipeContainer.setOnRefreshListener(() ->
+                new Thread(() -> {
+                    Call<List<ContactClass>> call = webServiceApi.getContacts("Bearer " + token);
+                    call.enqueue(new Callback<List<ContactClass>>() {
+                        @Override
+                        public void onResponse(Call<List<ContactClass>> call, Response<List<ContactClass>> response) {
+                            if (response.isSuccessful()) {
+                                for (Contact c : contactList) {
+                                    contactDao.delete(c);
+                                }
+                                List<ContactClass> List = response.body();
+                                for (ContactClass c : List) {
+                                    Contact contact = new Contact(c.getId(), c.getName(), c.getServer(), c.getLast(), c.getLastdate());
+                                    contact.setUserId(MyApplication.username);
+                                    contactDao.insert(contact);
+                                    contactList.add(contact);
+
+                                }
+                                swipeContainer.setRefreshing(false);
+                                onResume();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<ContactClass>> call, Throwable t) {
+                            swipeContainer.setRefreshing(false);
+                        }
+                    });
+                }).start());
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     @Override

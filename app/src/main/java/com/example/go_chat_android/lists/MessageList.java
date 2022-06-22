@@ -12,13 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.go_chat_android.AppDB;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.R;
 import com.example.go_chat_android.adapters.MessageListAdapter;
 import com.example.go_chat_android.api.WebServiceApi;
+import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.daos.MessageDao;
+import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.ContactClass;
 import com.example.go_chat_android.entities.Content;
 import com.example.go_chat_android.entities.Message;
@@ -43,12 +46,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MessageList extends AppCompatActivity {
     private AppDB db;
     private MessageDao messageDao;
+    private ContactDao contactDao;
     private List<Message> messageList;
     private String contactName;
     private EditText etInput;
     private Button btnSend;
     private TextView tvName;
     private RecyclerView RVMessageList;
+    private SwipeRefreshLayout swipeContainer;
     private MessageListAdapter adapter;
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
@@ -63,6 +68,7 @@ public class MessageList extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "MessagesDB").allowMainThreadQueries().build();
 
         messageDao = db.messageDao();
+        contactDao = db.contactDao();
 
         contactName = getIntent().getExtras().getString("contactName");
         MyApplication.friendBaseurl = getIntent().getExtras().getString("url");
@@ -89,6 +95,7 @@ public class MessageList extends AppCompatActivity {
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
         String token = MyApplication.token;
+
         new Thread(() -> {
             Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
             call.enqueue(new Callback<List<MessageClass>>() {
@@ -109,10 +116,13 @@ public class MessageList extends AppCompatActivity {
 
                         // update the contact in the contact list - gili
                         if (last != null) {
-
+//                            List<Contact> c = contactDao.getContacts(MyApplication.username);
+//                            Contact contact = contactDao.getContact(MyApplication.username,contactName);
+//                            contact.setLast(last.getContent());
+//                            contact.setLastdate(last.getCreated());
+//                            contactDao.update(contact);
                         }
-                        adapter.setMessageList(messageList);
-                        adapter.notifyDataSetChanged();
+                        onResume();
                     }
                 }
 
@@ -177,6 +187,46 @@ public class MessageList extends AppCompatActivity {
                 }).start();
             }
         });
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.messageRefreshLayout);
+        swipeContainer.setOnRefreshListener(() ->
+                new Thread(() -> {
+            Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
+            call.enqueue(new Callback<List<MessageClass>>() {
+                @Override
+                public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
+                    if (response.isSuccessful()) {
+                        for (Message msg: messageList) {
+                            messageDao.delete(msg);
+                        }
+                        MessageClass last = null;
+                        List<MessageClass> List = response.body();
+                        for(MessageClass msg: List) {
+                            msg.setContactName(contactName);
+                            Message message = new Message(msg, MyApplication.username);
+                            messageDao.insert(message);
+                            last = msg;
+                        }
+                        swipeContainer.setRefreshing(false);
+                        // update the contact in the contact list - gili
+                        if (last != null) {
+
+                        }
+                        onResume();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<MessageClass>> call, Throwable t) {
+                    swipeContainer.setRefreshing(false);
+                }
+            });
+        }).start());
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
