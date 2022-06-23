@@ -10,8 +10,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.go_chat_android.entities.Contact;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.List;
 
 public class MyService extends FirebaseMessagingService {
     private LocalBroadcastManager broadcaster;
@@ -30,6 +33,10 @@ public class MyService extends FirebaseMessagingService {
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            Contact c = MyApplication.contactDao.getContact(MyApplication.username, remoteMessage.getNotification().getTitle());
+            if (c != null)
+                c.setLast(remoteMessage.getNotification().getBody());
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());

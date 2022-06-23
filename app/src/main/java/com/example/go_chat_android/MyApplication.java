@@ -3,6 +3,7 @@ package com.example.go_chat_android;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.go_chat_android.daos.ContactDao;
 import com.example.go_chat_android.daos.UserDao;
 import com.example.go_chat_android.entities.Contact;
 
@@ -15,6 +16,7 @@ public class MyApplication extends Application {
     public static String username;
     public static String friendBaseurl;
     public static UserDao userDao;
+    public static ContactDao contactDao;
 
     @Override
     public void onCreate() {

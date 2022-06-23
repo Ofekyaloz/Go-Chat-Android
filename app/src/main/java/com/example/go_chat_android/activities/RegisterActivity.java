@@ -14,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
+import com.example.go_chat_android.AppDB;
 import com.example.go_chat_android.MyApplication;
 import com.example.go_chat_android.api.WebServiceApi;
 import com.example.go_chat_android.daos.UserDao;
@@ -36,6 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private AppDB db;
     private ActivityRegisterBinding registerBinding;
     private final int GALLERY_REQ_CODE = 1000;
     private Retrofit retrofit;
@@ -52,6 +55,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         registerBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(registerBinding.getRoot());
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "UsersDB").allowMainThreadQueries().build();
+        userDao = db.userDao();
 
         registerBinding.btnRegister.setOnClickListener(v -> {
             String password = registerBinding.etRegisterPassword.getText().toString();

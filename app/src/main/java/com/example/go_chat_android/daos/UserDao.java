@@ -19,11 +19,11 @@ public interface UserDao {
     List<User> get(String username);
 
     @Insert
-    void insert(User... messages);
+    void insert(User... users);
 
     @Update
-    void update(User... messages);
+    void update(User... users);
 
     @Delete
-    void delete(User... messages);
+    void delete(User... users);
 }
