@@ -58,6 +58,7 @@ public class ContactList extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
 
+        MyApplication.userDao = db.userDao();
         contactDao = db.contactDao();
 
         FloatingActionButton btnAdd = findViewById(R.id.btnAddContact);

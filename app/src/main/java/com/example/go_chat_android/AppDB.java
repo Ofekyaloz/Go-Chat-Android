@@ -11,7 +11,7 @@ import com.example.go_chat_android.entities.Contact;
 import com.example.go_chat_android.entities.Message;
 import com.example.go_chat_android.entities.User;
 
-@Database(entities = {Contact.class, Message.class, User.class}, version = 3)
+@Database(entities = {Contact.class, Message.class, User.class}, version = 4)
 public abstract class AppDB extends RoomDatabase{
     public abstract MessageDao messageDao();
     public abstract ContactDao contactDao();
