@@ -51,6 +51,7 @@ public class ContactList extends AppCompatActivity {
 
     private AppDB db;
     private ContactDao contactDao;
+    private UserDao userDao;
     private List<Contact> contactList;
     private List<User> userList;
     private Retrofit retrofit;
@@ -96,10 +97,13 @@ public class ContactList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
 
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "UsersDB").allowMainThreadQueries().build();
+        userDao = db.userDao();
+
         ImageView ivUser = findViewById(R.id.ivUserPic);
         TextView tvUserNickname = findViewById(R.id.tvUserNickname);
 
-        List<User> users = MyApplication.userDao.get(MyApplication.username);
+        List<User> users = userDao.get(MyApplication.username);
         if (users.size() > 0 && users.get(0).getImage() != null) {
             byte[] byteArray = users.get(0).getImage();
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
