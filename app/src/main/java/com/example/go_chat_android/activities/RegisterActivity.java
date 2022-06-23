@@ -137,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             User u = new User(username, nickname, byteImage);
                             userDao.insert(u);
-
+                            finish();
                             Intent intent = new Intent(getApplicationContext(), ContactList.class);
                             startActivity(intent);
                         }
