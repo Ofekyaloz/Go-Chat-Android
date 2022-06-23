@@ -112,7 +112,7 @@ public class ContactList extends AppCompatActivity {
             ivUser.setImageResource(R.drawable.icon_user_default);
         }
 
-        if (user.getNickName() != null) {
+        if (user != null && user.getNickName() != null) {
             tvUserNickname.setText(user.getNickName());
         } else {
             tvUserNickname.setText(MyApplication.username);
