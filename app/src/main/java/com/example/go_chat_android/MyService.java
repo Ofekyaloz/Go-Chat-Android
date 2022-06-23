@@ -2,17 +2,22 @@ package com.example.go_chat_android;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyService extends FirebaseMessagingService {
+    private LocalBroadcastManager broadcaster;
+
     public MyService() {
+        broadcaster = LocalBroadcastManager.getInstance(this);
     }
 
     @Override
@@ -28,6 +33,8 @@ public class MyService extends FirebaseMessagingService {
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());
+            Intent intent = new Intent("MyData");
+            broadcaster.sendBroadcast(intent);
         }
     }
 

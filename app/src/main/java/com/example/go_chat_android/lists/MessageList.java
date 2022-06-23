@@ -1,6 +1,10 @@
 package com.example.go_chat_android.lists;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -9,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -58,6 +63,7 @@ public class MessageList extends AppCompatActivity {
     private Retrofit retrofit;
     private WebServiceApi webServiceApi;
     private Gson gson;
+    private String token;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -94,7 +100,7 @@ public class MessageList extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
-        String token = MyApplication.token;
+        token = MyApplication.token;
 
         new Thread(() -> {
             Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
@@ -102,12 +108,12 @@ public class MessageList extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
                     if (response.isSuccessful()) {
-                        for (Message msg: messageList) {
+                        for (Message msg : messageList) {
                             messageDao.delete(msg);
                         }
                         MessageClass last = null;
                         List<MessageClass> List = response.body();
-                        for(MessageClass msg: List) {
+                        for (MessageClass msg : List) {
                             msg.setContactName(contactName);
                             Message message = new Message(msg, MyApplication.username);
                             messageDao.insert(message);
@@ -190,37 +196,37 @@ public class MessageList extends AppCompatActivity {
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.messageRefreshLayout);
         swipeContainer.setOnRefreshListener(() ->
                 new Thread(() -> {
-            Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
-            call.enqueue(new Callback<List<MessageClass>>() {
-                @Override
-                public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
-                    if (response.isSuccessful()) {
-                        for (Message msg: messageList) {
-                            messageDao.delete(msg);
-                        }
-                        MessageClass last = null;
-                        List<MessageClass> List = response.body();
-                        for(MessageClass msg: List) {
-                            msg.setContactName(contactName);
-                            Message message = new Message(msg, MyApplication.username);
-                            messageDao.insert(message);
-                            last = msg;
-                        }
-                        swipeContainer.setRefreshing(false);
-                        // update the contact in the contact list - gili
-                        if (last != null) {
+                    Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
+                    call.enqueue(new Callback<List<MessageClass>>() {
+                        @Override
+                        public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
+                            if (response.isSuccessful()) {
+                                for (Message msg : messageList) {
+                                    messageDao.delete(msg);
+                                }
+                                MessageClass last = null;
+                                List<MessageClass> List = response.body();
+                                for (MessageClass msg : List) {
+                                    msg.setContactName(contactName);
+                                    Message message = new Message(msg, MyApplication.username);
+                                    messageDao.insert(message);
+                                    last = msg;
+                                }
+                                swipeContainer.setRefreshing(false);
+                                // update the contact in the contact list - gili
+                                if (last != null) {
 
+                                }
+                                onResume();
+                            }
                         }
-                        onResume();
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<List<MessageClass>> call, Throwable t) {
-                    swipeContainer.setRefreshing(false);
-                }
-            });
-        }).start());
+                        @Override
+                        public void onFailure(Call<List<MessageClass>> call, Throwable t) {
+                            swipeContainer.setRefreshing(false);
+                        }
+                    });
+                }).start());
 
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -237,4 +243,61 @@ public class MessageList extends AppCompatActivity {
         messageList.addAll(messageDao.get(contactName, MyApplication.username));
         adapter.notifyDataSetChanged();
     }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver((mMessageReceiver),
+                new IntentFilter("MyData"));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            new Thread(() -> {
+                Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
+                call.enqueue(new Callback<List<MessageClass>>() {
+                    @Override
+                    public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
+                        if (response.isSuccessful()) {
+                            for (Message msg : messageList) {
+                                messageDao.delete(msg);
+                            }
+                            MessageClass last = null;
+                            List<MessageClass> List = response.body();
+                            for (MessageClass msg : List) {
+                                msg.setContactName(contactName);
+                                Message message = new Message(msg, MyApplication.username);
+                                messageDao.insert(message);
+                                last = msg;
+                            }
+
+                            // update the contact in the contact list - gili
+                            if (last != null) {
+//                            List<Contact> c = contactDao.getContacts(MyApplication.username);
+//                            Contact contact = contactDao.getContact(MyApplication.username,contactName);
+//                            contact.setLast(last.getContent());
+//                            contact.setLastdate(last.getCreated());
+//                            contactDao.update(contact);
+                            }
+                            onResume();
+                            RVMessageList.scrollToPosition(messageList.size() - 1);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<MessageClass>> call, Throwable t) {
+
+                    }
+                });
+            }).start();
+        }
+    };
 }
