@@ -65,7 +65,6 @@ public class MessageList extends AppCompatActivity {
     private Gson gson;
     private String token;
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,7 +261,43 @@ public class MessageList extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            new Thread(() -> {
+                Call<List<MessageClass>> call = webServiceApi.getMessages(contactName, "Bearer " + token);
+                call.enqueue(new Callback<List<MessageClass>>() {
+                    @Override
+                    public void onResponse(Call<List<MessageClass>> call, Response<List<MessageClass>> response) {
+                        if (response.isSuccessful()) {
+                            for (Message msg : messageList) {
+                                messageDao.delete(msg);
+                            }
+                            MessageClass last = null;
+                            List<MessageClass> List = response.body();
+                            for (MessageClass msg : List) {
+                                msg.setContactName(contactName);
+                                Message message = new Message(msg, MyApplication.username);
+                                messageDao.insert(message);
+                                last = msg;
+                            }
 
+                            // update the contact in the contact list - gili
+                            if (last != null) {
+//                            List<Contact> c = contactDao.getContacts(MyApplication.username);
+//                            Contact contact = contactDao.getContact(MyApplication.username,contactName);
+//                            contact.setLast(last.getContent());
+//                            contact.setLastdate(last.getCreated());
+//                            contactDao.update(contact);
+                            }
+                            onResume();
+                            RVMessageList.scrollToPosition(messageList.size() - 1);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<MessageClass>> call, Throwable t) {
+
+                    }
+                });
+            }).start();
         }
     };
 }
