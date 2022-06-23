@@ -107,7 +107,7 @@ public class ContactList extends AppCompatActivity {
         if (users.size() > 0 && users.get(0).getImage() != null) {
             byte[] byteArray = users.get(0).getImage();
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            ivUser.setImageBitmap(Bitmap.createScaledBitmap(bmp, ivUser.getWidth(), ivUser.getHeight(), false));
+            ivUser.setImageBitmap(Bitmap.createScaledBitmap(bmp, 80, 80, false));
         } else {
             ivUser.setImageResource(R.drawable.icon_user_default);
         }

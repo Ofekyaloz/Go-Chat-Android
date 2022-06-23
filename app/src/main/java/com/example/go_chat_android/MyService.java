@@ -34,10 +34,6 @@ public class MyService extends FirebaseMessagingService {
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            Contact c = MyApplication.contactDao.getContact(MyApplication.username, remoteMessage.getNotification().getTitle());
-            if (c != null)
-                c.setLast(remoteMessage.getNotification().getBody());
-
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());
             Intent intent = new Intent("MyData");

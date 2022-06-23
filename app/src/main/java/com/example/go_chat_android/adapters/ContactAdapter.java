@@ -51,7 +51,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         if (users.size() > 0 && users.get(0).getImage() != null) {
             byte[] byteArray = users.get(0).getImage();
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, imageView.getWidth(), imageView.getHeight(), false));
+            imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, 80, 80, false));
         }
         else {
             imageView.setImageResource(R.drawable.icon_user_default);
