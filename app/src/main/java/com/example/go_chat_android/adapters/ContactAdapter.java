@@ -47,9 +47,9 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         TextView lastMsg = convertView.findViewById(R.id.last_massage);
         TextView time = convertView.findViewById(R.id.time);
 
-        List<User> users = MyApplication.userDao.get(contact.getUserId());
-        if (users.size() > 0 && users.get(0).getImage() != null) {
-            byte[] byteArray = users.get(0).getImage();
+        User user = MyApplication.userDao.get(contact.getName());
+        if (user != null && user.getImage() != null) {
+            byte[] byteArray = user.getImage();
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, 80, 80, false));
         }

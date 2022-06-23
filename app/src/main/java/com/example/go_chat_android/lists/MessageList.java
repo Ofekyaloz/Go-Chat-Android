@@ -120,13 +120,8 @@ public class MessageList extends AppCompatActivity {
                             last = msg;
                         }
 
-                        // update the contact in the contact list - gili
                         if (last != null) {
-//                            List<Contact> c = contactDao.getContacts(MyApplication.username);
-//                            Contact contact = contactDao.getContact(MyApplication.username,contactName);
-//                            contact.setLast(last.getContent());
-//                            contact.setLastdate(last.getCreated());
-//                            contactDao.update(contact);
+
                         }
                         onResume();
                     }
@@ -213,7 +208,7 @@ public class MessageList extends AppCompatActivity {
                                     last = msg;
                                 }
                                 swipeContainer.setRefreshing(false);
-                                // update the contact in the contact list - gili
+
                                 if (last != null) {
 
                                 }
@@ -281,11 +276,7 @@ public class MessageList extends AppCompatActivity {
 
                             // update the contact in the contact list - gili
                             if (last != null) {
-//                            List<Contact> c = contactDao.getContacts(MyApplication.username);
-//                            Contact contact = contactDao.getContact(MyApplication.username,contactName);
-//                            contact.setLast(last.getContent());
-//                            contact.setLastdate(last.getCreated());
-//                            contactDao.update(contact);
+
                             }
                             onResume();
                             RVMessageList.scrollToPosition(messageList.size() - 1);

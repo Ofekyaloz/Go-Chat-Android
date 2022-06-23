@@ -103,17 +103,17 @@ public class ContactList extends AppCompatActivity {
         ImageView ivUser = findViewById(R.id.ivUserPic);
         TextView tvUserNickname = findViewById(R.id.tvUserNickname);
 
-        List<User> users = userDao.get(MyApplication.username);
-        if (users.size() > 0 && users.get(0).getImage() != null) {
-            byte[] byteArray = users.get(0).getImage();
+        User user = userDao.get(MyApplication.username);
+        if (user != null && user.getImage() != null) {
+            byte[] byteArray = user.getImage();
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             ivUser.setImageBitmap(Bitmap.createScaledBitmap(bmp, 80, 80, false));
         } else {
             ivUser.setImageResource(R.drawable.icon_user_default);
         }
 
-        if (users.size() > 0 && users.get(0).getNickName() != null) {
-            tvUserNickname.setText(users.get(0).getNickName());
+        if (user.getNickName() != null) {
+            tvUserNickname.setText(user.getNickName());
         } else {
             tvUserNickname.setText(MyApplication.username);
         }
