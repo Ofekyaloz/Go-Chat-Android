@@ -53,8 +53,10 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, imageView.getWidth(), imageView.getHeight(), false));
         }
-        else
+        else {
             imageView.setImageResource(R.drawable.icon_user_default);
+        }
+
         userName.setText(contact.getNickname());
         lastMsg.setText(contact.getLast());
         time.setText(contact.getLastdate());

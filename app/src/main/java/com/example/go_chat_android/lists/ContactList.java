@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -96,8 +98,21 @@ public class ContactList extends AppCompatActivity {
 
         ImageView ivUser = findViewById(R.id.ivUserPic);
         TextView tvUserNickname = findViewById(R.id.tvUserNickname);
-        ivUser.setImageResource(R.drawable.icon_user_default);
-        tvUserNickname.setText(MyApplication.username);
+
+        List<User> users = MyApplication.userDao.get(MyApplication.username);
+        if (users.size() > 0 && users.get(0).getImage() != null) {
+            byte[] byteArray = users.get(0).getImage();
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            ivUser.setImageBitmap(Bitmap.createScaledBitmap(bmp, ivUser.getWidth(), ivUser.getHeight(), false));
+        } else {
+            ivUser.setImageResource(R.drawable.icon_user_default);
+        }
+
+        if (users.size() > 0 && users.get(0).getNickName() != null) {
+            tvUserNickname.setText(users.get(0).getNickName());
+        } else {
+            tvUserNickname.setText(MyApplication.username);
+        }
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
 
